@@ -1,0 +1,258 @@
+\documentclass[10pt, AMS Euler]{article}
+\textheight=9.25in \textwidth=7in \topmargin=-.75in
+ \oddsidemargin=-0.25in
+\evensidemargin=-0.25in
+\usepackage{url}  % The bib file uses this
+\usepackage{graphicx} %to import pictures
+\usepackage{amsmath, amssymb}
+\usepackage{theorem, concrete, multicol}
+
+
+\setlength{\intextsep}{5mm} \setlength{\textfloatsep}{5mm}
+\setlength{\floatsep}{5mm}
+
+
+{\theorembodyfont{\rmfamily}
+\newtheorem{definition}{Definition}[section]}
+{\theorembodyfont{\rmfamily} \newtheorem{example}{Example}[section]}
+{\theorembodyfont{\rmfamily} \newtheorem{lemma}{Lemma}[section]}
+{\theorembodyfont{\rmfamily} \newtheorem{theorem}{Theorem}[section]}
+{\theorembodyfont{\rmfamily} \newenvironment{proof}{\par{\it
+Proof:}}{\nopagebreak[4]\rule{2mm}{2mm}}}
+{\theorembodyfont{\rmfamily}
+\newenvironment{solution}{\par{\bf{Solution:}}}{\nopagebreak[4]\rule{2mm}{2mm}}
+
+
+%%%%  SHORTCUT COMMANDS  %%%%
+\newcommand{\ds}{\displaystyle}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\arc}{\rightarrow}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\stirling}[2]{\genfrac{\{}{\}}{0pt}{}{#1}{#2}}
+
+%%%%  footnote style %%%%
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\pagestyle{empty}
+\begin{document}
+
+
+\noindent{\bf \large MATH 3310 -- Meeting Ten}, 2/9/2017\\
+
+\noindent {\bf Topic:}  Distributions ... or ... Functions on Finite Sets.\\
+
+%\noindent {\bf Key Ideas:}
+%\begin{itemize}
+%\item {\bf Definitions.}  Mathematics expands through good definitions.
+%\end{itemize}
+
+
+\noindent {\bf Flour and Eggs:}
+
+\begin{description}
+\item[Functions.]  Keep the concept of functions close to your mind's eye.
+
+\item[Finite Sets.] I use the term `$n$-set' to mean a set with size $n$, or cardinality $n$, where $n \in \N$. 
+An $n$-set we will work with often, 'cuz we typically lose no generality in it, is $[n] = \{1,2,3,\dots, n\}$ and 
+we conventionally take $[0]$ to mean $\O$.
+\end{description}
+
+\noindent {\bf Agenda items:}
+\begin{enumerate}
+%\item{\bf Comment(s) Inspired by Homework Solutions.}
+
+\item {\bf Distributions.}  I claimed that ``many, possibly all, counting problems can be seen as distribution problems'' not to 
+correctly align your perspectives with those of the universe, but rather to provide another perspective.  
+For example, let's think about choosing a subset of size $k$ from a set with $n$ elements (where $n$ and 
+$k$ are nonnegative integers, of course).  Let $K$ denote the $k$-set and $N$ the $n$-set.  Clever, I know.  
+The function $f:K \to N$ if regarded as one-to-one, chooses the subset: suppose $x \in K$, $y \in N$, and $(x,y) \in f$; 
+the pair $(x,y)$ can be interpreted as ``element $y$ of $N$ belongs to the subset $K$''.  If $K$ is a set of balls, and $N$ is a set of 
+boxes, then $(x,y)\in f$ means $f$ places ball $x$ into box $y$.  If a box of $N$ gets a ball under $f$, we can think of it as choosing that element of 
+$N$ for the subset.  Note that $K$ should be regarded as a set of unlabeled objects and $N$ as a set of labeled objects. 
+
+\item {\bf Binomial Coefficients.} The symbol $\binom{n}{k}$ is defined to be the number of $k$-element subsets
+in an $n$-element set.
+In many textbooks the symbol is defined to be $\binom{n}{k} = \frac{n!}{k!(n-k)!}$.
+This is a lame\footnote{I'm using this term literally, not figuratively as it is sometimes used.
+I mean that defining $\binom{n}{k}$ in this way makes the symbol basically useless, but the symbol has a meaning which is
+hidden by the bandages covering $\binom{n}{k}$ by this definition -- now I'm speaking figuratively.} definition.
+
+\textsf{Terminology:} I will call a (finite) set with $k$ elements a \emph{$k$-set.}
+
+The symbol $\binom{n}{k}$ is called a \emph{binomial coefficient} because it is the coefficient of the term of degree $k$ in a binomial raised
+to the power $n$.  For example, the coefficient on $x^4$ in $(1+x)^n$ is $\binom{n}{4}$.  You should convince yourself of this ASAP. 
+Think about each coefficient $C_i$, $0 \leq i \leq n$, in the expansion
+$$(1+x)^n = C_0 + C_1x +C_2 x^2 + C_3x^3 +C_4 x^4 + \cdots + C_ix^i + \cdots C_nx^n.$$
+Realize that the coefficient $C_i$ is the number of ways to get a term of the form $x^i$ from the product
+$$\underbrace{(1+x)(1+x)(1+x) \cdots (1+x)}_{\mbox{$n$ factors}},$$
+and this is the number of ways to choose $x$ from $i$ of the factors.  Therefore $C_i = \binom{n}{i}$, and 
+$$(1+x)^n = \sum_{i = 0}^n\binom{n}{i}x^i.$$
+
+{\bf Pascal's Triangle.} The binomial coefficient $\binom{n}{k}$ satisfies the following relationship, which gives a way to determine any
+binomial coefficient from other binomial coefficients with smaller upper and lower indexes.  In other terms, the theorem defines $\binom{n}{k}$
+\emph{recursively}. 
+
+{\bf Theorem 2.9.1.} (Pascal's Identity) \emph{For $n,k \in \N$ and $n \geq 1$, $\binom{n}{k} = \binom{n-1}{k-1}+ \binom{n-1}{k}$.}
+
+Pascal's Identity yields a way to display the binomial coefficients in a triangular array, using the facts $\binom{n}{0}= \binom{n}{n} = 1$
+and $\binom{n}{k} = 0$ if $k > n$.
+
+\emph{Proof of Pascal's Identity}: Suppose you have $n-1$ objects and a llama --- so $n$ objects in total, one of which happens to be a llama.
+How many $k$-sets can you create from these $n$ objects?  By definition, $\binom{n}{k}$.  But we could condition on the llama and whether or not
+we want it in the $k$-set. If we don't, there are $\binom{n-1}{k}$ ways to create a $k$-set with no llama, since we
+simply disregard the llama during the selection process.  If we want the llama, then we put the llama in the set and then
+select the remaining $k-1$ objects from $n-1$ other non-llama objects.  In all we have $\binom{n-1}{k}+\binom{n-1}{k-1}$ to build a $k$-set
+if we condition on the llama.  But in the end we still have a $k$-set selected from $n$ objects, and the identity is established.  Note that we needed
+at least one object -- the llama -- to make this argument. \hfill \rule{2mm}{2mm}
+
+\item{\bf Factorial: Linear Arrangements.} Pretend $n$ objects are arranged linearly, or ranked as first, second, third, and so on.
+Define the symbol $n!$, read ``$n$-factorial'', to be the number of ways to rearrange the $n$ objects.
+
+{\bf Theorem 2.7.1.} \emph{For $m \in \Z^+$, $n! = n(n-1)(n-2) \cdots 2 \cdot 1$, and $0! =1$.}
+
+\emph{Proof}: Take the $n$ objects and place them in a set.  Next decide which of the $n$ objects is to be the new first object.  Having
+done that decide which of the remaining $n-1$  objects is to be the new second object.  Continuing in this manner observe that after
+we place the new $i$th object, we have $n-i$ choices for the new $(i+1)$st object, where $1 \leq i \leq n-1$. \hfill \rule{2mm}{2mm}
+
+Define the symbol $n^{\underline{k}}$, read ``$n$ to the $k$-falling'', to be the number of ways to rearrange $k$ of $n$ linearly arranged
+objects.
+
+{\bf Theorem 2.7.2.} \emph{For $n,k \in \N$, $n^{\underline{k}} = n(n-1)(n-2)\cdots (n - (k-2))(n-(k-1))$.}
+
+\emph{Proof}:  Proceed as in the proof of Theorem 2.7.1, except $i$ ranges from $1$ to $k-1$.  \hfill \rule{2mm}{2mm}
+
+{\bf Theorem 2.9.2.} \emph{For $n, k \in \N$, $\binom{n}{k} = \frac{n!}{k!(n-k)!} = \frac{n^{\underline{k}}}{k!}$.}
+
+\emph{Proof}: Count the number of ways to rearrange $k$ of $n$ objects.  By definition, this is $n^{\underline{k}}$.  But we may perform the
+implied task by first selecting which $k$ of the $n$ objects are to be rearranged and then arranging those $k$ objects.
+This is done in $\binom{n}{k}k!$ ways.  We have the relationship $n^{\underline{k}} = \binom{n}{k}k!$ which we can solve for the
+unknown $\binom{n}{k}$ and obtain $\binom{n}{k} = \frac{n^{\underline{k}}}{k!}$ (the division by $k!$ is possible since $k!$
+is never $0$). \hfill \rule{2mm}{2mm}
+
+\item{\bf Combinatorial Arguments.}  The argument above for Theorem 2.9.1 is a \emph{combinatorial argument}.  
+Compare it to the following proof which uses Theorem 2.9.2 to introduce an algebraic expression for $\binom{n}{k}$.  
+Note that without Theorem 2.9.2, we cannot ostensibly do any algebra with $\binom{n}{k}$.
+
+\emph{Algebraic proof of Pascal's Identity:}  Note that $\binom{n}{k} = \frac{n!}{k!(n-k)!}$, and so 
+\begin{eqnarray*} \binom{n-1}{k} + \binom{n-1}{k-1}
+&=& \frac{(n-1)!}{k!(n-1-k)!} + \frac{(n-1)!}{(k-1)!(n-1-(k-1))!} \\
+&=& \frac{(n-1)!}{k!(n-k-1)!} + \frac{k(n-1)!}{k(k-1)!(n-k)!} \\
+&=& \frac{(n-k)(n-1)!}{k!(n-k)(n-k-1)!} + \frac{k(n-1)!}{k!(n-k)!} \\
+&=& \frac{(n-k)(n-1)!)}{k!(n-k)!)} + \frac{k(n-1)!}{k!(n-k)!} \\
+&=& \frac{(n-k)(n-1)! + k(n-1)!}{k!(n-k)!} \\ 
+&= & \frac{n(n-1)! - k(n-1)! + k(n-1)!}{k!(n-k)!} = \frac{n}{k!(n-k)!} = \binom{n}{k}.
+\end{eqnarray*}
+The first and last equalities are true by Theorem 2.9.2. \hfill $\Box$
+
+A basic distinction a combinatorial argument is that it does not rest solely on algebraic manipulation.  
+
+\item{\bf Multisets.}  A (finite) {\bf multiset} is a function $\mu:S \to \N$, where $S$ is a finite set.
+Suppose $S = \{a_1, a_2, \dots, a_k\}$; we call $S$ a {\bf basis set} or {\bf base set} or {\bf ground set}.
+It is probably most useful to regard a multiset as a ``\emph{set with repetition of elements allowed}'' even though this is an oxymoron,
+and to denote the set as $M = \langle a_1^{\mu(a_1)}, a_2^{\mu(a_2)}, \dots, a_k^{\mu(a_k)}\rangle$,
+where $\mu(a_i)$ is the {\bf multiplicity} of element $a_i$. The {\bf size} of a multiset is $\sum_{a_i \in S}^k\mu(a_i)$.
+If $M$ is small enough, the exponents can be disregarded and the
+set can be explicitly listed.
+For example, assume  $S$ includes (at least) the elements $a_1,a_2,$ and $a_3$, $\mu(a_1) = 3$, $\mu(a_3) = 1$, and $\mu(a_i) = 0$ for $i =2$ and $i > 3$.
+Then this multiset can be written as $M = \langle a_1,a_1, a_1, a_3\rangle$.
+
+
+{\bf Fact:} \emph{The number of multisets of size $n$ built from a basis set with $k$ elements is the number of
+solutions to $x_1 + x_2 + \cdots + x_k = n$ with $x_i \in \N$.}
+
+\emph{Proof:} Suppose the basis set is $S = \{a_1, \dots, a_k\}$.  Now interpret $x_i$ as $\mu(a_i)$ for each $i$.
+Since the size of a multiset is the sum of the multiplicities of the elements from $S$, any vector
+$\vec{x} = (x_1, \dots, x_k)$ whose entries sum to $n$ constitutes a specification of a multiset of size $n$. \hfill $\Box$
+
+\item{\bf Multiset Numbers.}  Define $\ds\left(\!\left(k \atop n \right)\!\right)$ to be the number of 
+multisets of size $n$ built from a basis set of size $k$.
+
+Given only the definition above you may be able to calculate $\left( \!\left(k \atop n\right)\! \right)$ for limiting values of $k$ and $n$.
+
+Try to argue the following facts (assume $k,n \in \N$, and note that $k < n$ does imply $\left(\!\left(k \atop n \right)\!\right) = 0$):
+\begin{enumerate}
+\item $\ds\left(\!\left(k \atop 0 \right)\!\right)  = 1$
+\item $\ds\left(\!\left(1 \atop n \right)\!\right) = 1$
+\item $\ds\left(\!\left(k \atop 1 \right)\!\right) = k$
+\item $\ds\left(\!\left(k \atop 2 \right)\!\right) = \binom{k}{2} + k$
+\end{enumerate}
+
+Students from a previous semester referred to $\left(\!\left(k \atop n \right)\!\right)$ as
+``$n$-choo-choose-$k$'', so I'm going to call them the \emph{choo-choose numbers}.
+
+{\bf Theorem Binochoochoo:} $\left(\!\left(k \atop n \right)\!\right) = \binom{n + k -1}{n}$ for $n, k \in \N$.
+
+\emph{Proof:}  Construct a multiset $M$ of size $n$ from basis set $[k]$ by placing $n$ pennies on a table in a line regarding the pennies as
+indistinguishable.  Now take $k-1$ paperclips and place them in between the pennies with any number of paperclips between any pair of
+consecutive pennies, to the left of all of the pennies or to the right of all of the pennies.
+Read the penny-paperclip code from left to right.  The number of pennies before paperclip 1 is the number of $1$s to be in $M$,
+the number of pennies between paperclip 1 and 2 is the number of $2$s in $M$, and so on with the number of pennies to the
+right of paperclip k-1 being the number of $k$s in $M$.  You could have created this penny-paperclip code by
+marking $n+k-1$ spots on the table and deciding which $n$ spots get the pennies. \hfill $\Box$\\
+
+{\bf Theorem Pascachoochoo:} $\left(\!\left(k \atop n \right)\!\right) = \left(\!\left(k \atop n-1 \right)\!\right)+\left(\!\left(k-1 \atop n \right)\!\right)$.
+
+\emph{Proof:} Assemble a team of $n$ cyclists from $k$ cyclists, one of whom is Lance Armstrong, and pretend you can clone any of the cyclists.
+Condition on whether you will include Lance on the team or not.  If you include (at least one copy of) Lance Armstrong, you may
+assemble the rest of the team in $\left(\!\left(k \atop n -1 \right)\!\right)$ ways possibly cloning Lance;
+If Lance is not to be on the team you can assemble the team in $\left(\!\left(k -1\atop n \right)\!\right)$ ways. \hfill $\Box$\\
+
+\end{enumerate}
+
+
+
+\noindent \underline{\hspace{3in}}\\
+
+\noindent{\bf Homework \#4:} ({\bf Due 2/10/2017}).\\ % Dave Rules!
+
+\noindent  Consider functions $f:A \to B$, where $A$ is a finite set with $n$ elements and $B$ is a finite set with $x$ elements.
+The table below has 12 entries for each of the possibilities corresponding to various properties $f$, $A$, and $B$ have.
+The function $f$ may be injective, surjective, or unrestricted.  The sets $A$ and $B$ may consist of elements that are distinguishable or indistinguishable
+(like socks versus shoes).
+
+Recall that, if $A$ and $B$ are sets, the notation $B^A$ stands for the set of all function that map $A$ into $B$.
+Recall that $f:A \stackrel{1-1}{\longrightarrow} B$ denotes that $f$ is a function from $A$ into $B$ that is injective.
+Recall that $f:A \stackrel{\mbox{onto}}{\longrightarrow} B$ denotes that $f$ is a surjective function mapping $A$ into $B$.
+
+The goal is count the number of functions with the properties indicated by the row and column headings in the table.
+For example, in entry number $5$ should be the number of functions that are injective that map $n$ indistinguishable objects to $x$ distinguishable objects.
+In Math-porn, this is
+$$\left|\left\{f \in B^A : A=\{a_1,a_2, \dots, a_n\}, |B| = x, f:A \stackrel{1-1}{\longrightarrow} B  \right\} \right|.$$
+While entry $12$ should house the number
+$$\left|\left\{f \in B^A : |A|=n, B =\{b_1,b_2, \dots, b_x\}, f:A \stackrel{\mbox{onto}}{\longrightarrow} B  \right\} \right|.$$
+
+$$\begin{array}{c|c||c|c|c}
+\hline A & B & \mbox{unrestricted }& \mbox{injective}& \mbox{onto} \\ \hline \hline
+\mbox{distinguishable} & \mbox{distinguishable} & 1. & 2. & 3. \\ \hline
+\mbox{indistinguishable}& \mbox{distinguishable}&4.&5.&6. \\ \hline
+\mbox{distinguishable} & \mbox{indistinguishable}& 7. & 8. & 9. \\ \hline
+\mbox{indistuishable}&\mbox{indistinguishable}& 10. &11.&12. \\ \hline \end{array}$$\\
+
+\noindent Please determine, with proof, the entries 2, 3, 5, 6, and 9 in the table.\\
+
+\noindent \underline{\hspace{3in}}\\
+
+
+\noindent \underline{\hspace{3in}}\\
+
+\noindent{\bf Homework \#5:} ({\bf Due 2/17/2017}).\\
+
+\begin{enumerate}
+\item Recall $\stirling{n}{k}$ denotes the number of partitions of an $n$-set into $k$ blocks.  
+Please prove the following  identity (which is a recurrence relation for $\stirling{n}{k}$)
+$$\stirling{n}{k} = \stirling{n-1}{k} + k\stirling{n-1}{k},$$
+and be sure to indicate the range of $n$ and $k$ and also indicate any relationship between $n$ and $k$ that must hold for the identity to be true.
+
+\item  Suppose $r,s,n \in \N$.  Please prove the identity (\ref{Vandermonde}) in two ways: combinatorially, and algebraically.
+\begin{eqnarray} \ds \sum_{i = 0}^n \binom{r}{i}\binom{s}{n-i} = \binom{r+s}{n} \label{Vandermonde} \end{eqnarray}.
+
+\item Suppose $n \in \N$. Please prove $\ds n2^{n-1} = \sum_{i \geq 0}\binom{n}{i}i$ combinatorially and algebraically. 
+\end{enumerate}
+
+
+\noindent \underline{\hspace{3in}}\\
+
+\end{document} 

@@ -1,0 +1,291 @@
+\documentclass[10pt, AMS Euler]{article}
+\textheight=9.25in \textwidth=7in \topmargin=-.75in
+ \oddsidemargin=-0.25in
+\evensidemargin=-0.25in
+\usepackage{url}  % The bib file uses this
+\usepackage{graphicx} %to import pictures
+\usepackage{amsmath, amssymb}
+\usepackage{theorem, concrete}
+
+
+\setlength{\intextsep}{5mm} \setlength{\textfloatsep}{5mm}
+\setlength{\floatsep}{5mm}
+
+
+{\theorembodyfont{\rmfamily}
+\newtheorem{definition}{Definition}[section]}
+{\theorembodyfont{\rmfamily} \newtheorem{example}{Example}[section]}
+{\theorembodyfont{\rmfamily} \newtheorem{lemma}{Lemma}[section]}
+{\theorembodyfont{\rmfamily} \newtheorem{theorem}{Theorem}[section]}
+{\theorembodyfont{\rmfamily} \newenvironment{proof}{\par{\it
+Proof:}}{\nopagebreak[4]\rule{2mm}{2mm}}}
+{\theorembodyfont{\rmfamily}
+\newenvironment{solution}{\par{\bf{Solution:}}}{\nopagebreak[4]\rule{2mm}{2mm}}
+
+
+%%%%  SHORTCUT COMMANDS  %%%%
+\newcommand{\ds}{\displaystyle}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\arc}{\rightarrow}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+
+%%%%  footnote style %%%%
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\pagestyle{empty}
+\begin{document}
+
+
+\noindent{\bf \large MATH 3310 -- Meeting Five}, 1/24/2017\\
+
+\noindent {\bf The Point:} Logic encompasses an attempt to systematically, carefully, and accurately record the ideal for 
+how we *should* think and how we come to know anything.  George Boole developed an algebra that reflected the 
+relationships understood to hold in Logic.  With this algebra, in theory and in ideal situations, one can perform 
+calculations to deduce the truth of arguments and of statements.\\
+
+
+
+\noindent {\bf Flour and Eggs:}
+
+\begin{description}
+
+\item[Logical Operations.]  There are three logical operations ($\implies$, $\wedge$, and $\vee$) and one operator ($\neg$) 
+as far as our intents and purposes are concerned.  The operations are \emph{mappings} (a.k.a., \emph{functions}) 
+from $\mathcal{M} \times \mathcal{M}$ into $\mathcal{M}$, and the operator is a mapping from $\mathcal{M}$ into $\mathcal{M}$.
+The set $\mathcal{M}$ is the set of all statements that are either true or false.  The truthinator $\Phi$ is a mystical function 
+that maps $\mathcal{M}$ into $\{T,F\}$, where $T$ is notation for `true' and $F$ is notation for `false'.  
+The behavior of the operations is described (`defined' might be more appropriate) below in their \emph{truth tables} (we should probably 
+call them $\Phi$-tables).
+
+\begin{center}
+$\begin{array}{|c|c|c|} \hline P & Q & P \implies Q \\
+\hline
+T & T & T \\
+F & T & T  \\
+T & F & F   \\
+F & F & T \\\hline
+\end{array}$
+\hspace{0.5in} 
+$\begin{array}{|c|c|c|} \hline P & Q & P \wedge Q \\
+\hline
+T & T & T \\
+F & T & F  \\
+T & F & F   \\
+F & F & F \\\hline
+\end{array}$ 
+\hspace{0.5in} 
+$\begin{array}{|c|c|c|} \hline P & Q & P \vee Q \\
+\hline
+T & T & T \\
+F & T & T  \\
+T & F & T   \\
+F & F & F \\\hline
+\end{array}$
+\end{center}
+
+The operator $\neg$ works like this: $\neg : \mathcal{M} \to \mathcal{M}$, where, for $P \in \mathcal{M}$, $\neg P$ is the \emph{negation} of $P$.  
+The negation of a statement is not exactly the logical opposite of the statement, but the negation of a statement should be true if the statement (non-negated) 
+is false, and vice-versa.  In other terms $\Phi(P) = T \implies \Phi(\neg P) = F$ and $\Phi(P) = F \implies \Phi(\neg P) = T$.  
+The negation of a statement can be tricky; simply putting a ``not'' in it somewhere may be accurate, but it may not be useful. 
+
+\item[Logical System.]  The Logical System we officially, traditionally, work with in Mathematics consists of $\mathcal{M}$, $\Phi$, $\implies$, $\wedge$, $\vee$, and $\neg$.
+We have a set of statements, a way to decide whether statements are true or false, and operations to build statements out of other statements.
+We will see that some of the operations are not necessary in the sense that we could replace some with other combinations or operations or completely new operations.  
+For example $\implies$ can be disregarded since $P \implies Q$ \emph{is (logically) equivalent to} $\neg P \vee Q$.  
+
+\item[Logical Equivalence.]  \textsf{What is meant by `\emph{is logically equivalent to}'?}  A statement is {\bf logically equivalent} to another statement if 
+the two statements, when analyzed with a truth table, yield the same $\Phi$-values.  For example ``$P \implies Q$'' and ``$\neg P \vee Q$'' are logically equivalent 
+statements because they have the same truth tables:
+
+\begin{center}
+$\begin{array}{|c|c|c|c|} \hline P & Q & \neg P \vee Q & P \implies Q \\
+\hline
+T & T & T & T \\
+T & F & F & F \\
+F & T & T & T  \\
+F & F & T & T \\\hline
+\end{array}$
+\end{center}
+
+\textsf{Notation.}  For $P, Q \in \mathcal{M}$, the notation $P \equiv Q$ means $P$ and $Q$ have the same truth tables. 
+
+\item[Logic is like Algebra on Statements.]  George Boole was one of the first mathematicians or logicians to attempt to produce a system like algebra that 
+could be used on language in general to determine truth.  His work on this published in 1847 was arguably the first substantial move toward the digital computer. 
+In the document \emph{A Brief Treatment of Logic}, section 4, I use the more common variables $x$, $y$, $z$, etc. to denote statements and `$=$' for `$\equiv$' to 
+highlight the analogy.  So for example the calculation $x \implies y = \neg x \vee y$ is valid and so is $\neg \neg x = x$ because each statement of equivalence can be 
+proved by examining truth tables.  For another example, what are often called ``\emph{DeMorgan's Laws}''\footnote{More loathsome terminology --- these are \emph{theorems}, 
+not ``laws''.}:
+$\neg (x \wedge y) = \neg x \vee \neg y$ and $\neg ( x \vee y ) = \neg x \wedge \neg y$.
+
+\end{description}
+
+
+\noindent {\bf Agenda items:}
+\begin{enumerate}
+
+\item {\bf Logical operations and Set Theoretic ones.}  Each logical operation we need corresponds to a set theoretic operation or relation.
+Union and intersection are (set-theoretic) operations which take two sets and form a new one, but \emph{subset} indicates a relationship between two sets.
+This is why I say ``operation or relation''.
+In the context of Logic ``or'', ``and'', and If-Then are operations: each takes two statements and produces a new one.
+The connection between Logic and Set Theory is of course a consequence of the definitions.
+
+Let $A$ and $B$ be sets.  The {\bf union} of $A$ and $B$, denoted $A \cup B$, is the set $\{\mbox{objects $x$}: x \in A \mbox{ or } x \in B\}$.
+The {\bf intersection} of $A$ and $B$, denoted $A \cap B$, is the set $\{\mbox{objects $x$}: x \in A \mbox{ and } x \in B\}$.
+
+I concede that the fact $A \subseteq B$ is defined via an If-Then relationship ($x \in A \implies x \in B$) makes it difficult to see the connection.
+I don't know what to say about this, other than \emph{think about how an If-Then statement is used.}  The calculus fact I used in \emph{Meeting Four} 
+as an example names a containment relationship among objects; the objects are continuous functions and differentiable functions.  
+Here is an abbreviation of the connections:
+
+\begin{center}
+\begin{tabular}{|c|c|l|}
+  \hline
+  % after \\: \hline or \cline{col1-col2} \cline{col3-col4} ...
+  English & Notation & Set-Theoretic \\ \hline
+  ``and'' & $\wedge$ & $\cap$ (intersection) \\
+  ``or'' & $\vee$ & $\cup$ (union) \\
+  If-Then & $\implies$ & $\subseteq$ (subset) \\ \hline
+
+\end{tabular}
+\end{center}
+
+\item {\bf The Contrapositive.}  The {\bf contrapositive} of ``If $P$, then $Q$'' is ``If not $Q$, then not $P$''.  
+In our logic-notation: the \emph{contrapositive} of  $P \implies Q$ is $\neg Q \implies \neg P$.
+
+{\bf Theorem:} \emph{The statement $P \implies Q$ is logically equivalent to $\neg Q \implies \neg P$.} 
+
+\emph{Proof:} Consider the truth table below and note that the third and fourth columns are identical.
+The fourth column is derived by applying $\Phi$ to $\neg Q \implies \neg P$ after applying the appropriate 
+$\Phi$-values dictated in applying $\neg$.  The boxed entries are the final $\Phi$-values.
+
+\begin{center}
+$\begin{array}{|c|c|c|c|} \hline P & Q & P \implies Q & \neg Q  \implies \neg P \\
+\hline
+T & T & T & F \; \boxed{T} \; F \\
+T & F & F & T \; \boxed{F} \; F \\
+F & T & T & T \; \boxed{T} \; T \\
+F & F & T & T \; \boxed{T} \; T\\\hline
+\end{array}$
+\end{center} 
+
+Therefore the statements $P \implies Q$ and $\neg Q \implies \neg P$ are equivalent. \hfill \rule{2mm}{2mm}
+
+\textsf{So What:} That `$P \implies Q$' and `$\neg Q \implies \neg P$' are logically equivalent means, among other things, that whenever an 
+If-Then statement is proved, its contrapositive can be used with impunity.  The statement \emph{If a function $f(x)$ is differentiable at $x = a$, then 
+$f(x)$ is continuous at $x = a$} can be used to prove that $f(x)$ is continuous at $x = a$, but its contrapositive can be used to prove that a 
+$f(x)$ is not differentiable at $x =a$. 
+
+
+\item {\bf Axioms and the $\{M,I,U\}$-System.}  The $\{M,I,U\}$-system is intended to be a miniature Mathematics.  The set $\mathcal{S}$ is the
+set of all MIU-theorems.  We will \emph{create} or \emph{discover} (depending on how you look at things) members of $\mathcal{S}$.
+I'll prove an MIU-theorem using a format which, I think, enforces a very strict habit of mind.
+It is an \textsc{unacceptable} format in ordinary circumstances because it is basically hieroglyphics.
+I will train you how to read it.  The column headings are intended to be self-explanatory.  In the Justification-column will be the notation $(x;y, \textsc{blah})$,
+where $x$ is the axiom that is applied, $y$ is the line to which it is applied, and \textsc{blah} is a detail intended to clarify how the axiom was applied.
+
+\begin{center}
+\begin{tabular}{|c|l|l|}
+  \hline
+  % after \\: \hline or \cline{col1-col2} \cline{col3-col4} ...
+  Line & String & Justification \\ \hline
+  1. & $MI$ & $(0,\mbox{not app.})$ \\
+  2. & $MII$ & $(2;1,x = I)$ \\
+  3. & $MIIII$ & $(2;2,x=II)$ \\
+  4. & $MIIIIIIII$ & $(2;3,x=IIII)$\\
+  5. & $MIIIIUI$ & $(3;4, x = MIIII, y = I)$\\
+  6. & $MUIUI$ & $(3;5, x = M, y = IUI)$\\
+
+\end{tabular}
+\end{center}
+
+Therefore $MUIUI \in \mathcal{S}$.  Of course, we also proved that $MII$, $MIIII$, $MIIIIIIII$, and $MIIIIUI$ are all in $\mathcal{S}$ as well.
+Note that naming the line we apply an axiom to is always the line directly above.
+This need not be the case, but there are no axioms that allow us to combine two strings or use two strings to produce a third.
+
+Now, I'll write the derivation of $MUIUI$ in English which is the way we're supposed to write it. 
+
+{\bf Theorem} \emph{$MUIUI \in \mathcal{S}$.}
+
+\emph{Proof:}  By Axiom 0 $MI$ is a member of $\mathcal{S}$, and Axiom applied to this with $x = I$ yields $MII \in \mathcal{S}$.
+A second and third application of Axiom 2, the first with $x = II$ and the second with $x = IIII$, yields $MIIIIIIII \in \mathcal{S}$.
+Now we use Axiom 3 to collapse the substring of the fifth, sixth, and seventh $I$ into $U$ obtaining $MIIIIUI \in \mathcal{S}$.
+Finally, we apply Axiom 3 to the substring of the first, second, and third $I$ to obtain the desired result.  \hfill \rule{2mm}{2mm}
+
+
+\item{\bf Think Outside the Box.}  Can you produce some sort of test that you could use on a random string of $M$s, $I$s, and $U$s to determine whether
+it is a member of $\mathcal{S}$?  Is $IIIUMIII \in \mathcal{S}$?  Is $MIUIUIU \in \mathcal{S}$?  With a little thought you will probably notice that
+all MIU-theorems must begin with $M$.  This can be proved, but you cannot use the $MIU$-axioms, strictly, to prove it; you've got to step outside the
+$\{M,I,U\}$-system to even state the fact ``\emph{All MIU-theorems must begin with $M$}''.  This is a \emph{metatheorem}.
+\item {\bf The If-Then Operation.}   Below is what is often referred to as a `\emph{truth table}' for the most important logical operation, If-Then.
+Suppose $P,Q \in \mathcal{M}$.  The table below is intended to display the $\Phi$-value of the statement $P \implies Q$ when the $\Phi$-values of
+$P$ and $Q$ are known.
+
+\textsf{Analogy:} The $\{M,I,U\}$-System is intended to model the axiomatic system of Mathematics.  
+The set $\mathcal{S}$ is analogous to $\{P \in \mathcal{M}: \Phi(P) = T\}$ and since `$T$' means `true' which in turn means 
+there exists a proof, the application of the axioms of the $\{M,I,U\}$-system is analogous to proving statements in our 
+system of Mathematics using the axioms of our Mathematics together with Logic.  The size and scope of the $\{M,I,U\}$-System is 
+conducive to suggesting what I think is a very powerful and deep idea.  
+
+\item {\bf Metatheorems.}  Recall that, for our intents and purposes, and to bootstrap the idea, \emph{truth} is defined
+as the existence of a proof.  A {\bf theorem} is a statement that has been proved.  So, if a statement has earned the distinction
+of `theorem' it has been proved.  There's a limbo in which some statements exist; a statement in this limbo is a \emph{conjecture}.
+A {\bf conjecture} is a statement, apparently mathematical, that has no proof and no counterexample.  Consider again \emph{Goldbach's Conjecture}:
+
+\textsf{Not a Theorem ... yet:} \emph{Every even integer greater than $4$ can be expressed as the sum of two primes.}
+
+This statement is clearly about mathematical objects and so if it is true, there \emph{should} be a proof, right?
+
+Nope.  One of \emph{G\"{o}del's incompleteness theorems} tells us that Goldbach's Conjecture may be unprovable even if it is true.
+
+{\bf Theorem:} (G\"{o}del's Theorem) \emph{In any axiomatic system that can support arithmetic, there exists statements that are true
+but have no proof.}
+
+To me, it is fascinating that, even though there is not a vast number of axioms that give us arithmetic, we cannot tell whether a
+statement is one of the kind that G\"{o}del's Theorem promises.
+The MIU-system, however, is not robust enough to support arithmetic and because of that we can produce \emph{metatheorems}, statements
+about the MIU-system that can be used to determine whether a statement in MIU-language is in fact an MIU-theorem.
+
+I don't have a definition for \emph{metatheorem}, well not really; the way I use `\emph{metatheorem}', however, is consistent with
+how most use `\emph{meta}' in conjunction with another term --- assuming they are doing it correctly.  For example, `\emph{Metaphysics}'
+for some is the study of the stuff in which experience happens --- the stuff that makes Physics (like Newtonian Physics, or Einsteinian Physics, or whatever)
+possible in the first place.  Theories in \emph{metaphysics}, it could be argued, are \emph{about} Physics.
+So, when \textsf{Prompt One} from \emph{An introduction to formal systems ...} asks you to prove a metatheorem, it is asking you to prove a theorem
+\emph{about} the MIU-system; in particular, it asks for a theorem that about MIU-theorems.  Ideally, the metatheorem you prove will be a theorem that
+\emph{could} help you determine whether a string of $M$s, $I$s, and $U$s is not an MIU-theorem.  The proof you produce will use the MIU-system's axioms, of course,
+but, because it is a metatheorem, it will also use ideas and tools that are outside of the MIU-system's reach.  Logic, for example.  
+
+
+
+\end{enumerate}
+
+\noindent \underline{\hspace{3in}}\\
+
+\noindent{\bf Homework \#2:} ({\bf Due 1/27/2017})  Reference the documents \emph{A Brief Treatment of Set Theory},
+\emph{An introduction to formal systems ...}, and \emph{A Brief Treatment of Logic}.
+
+\begin{enumerate}
+
+\item Please respond to \textsf{Prompt One} from \emph{An introduction to formal systems ...}.
+
+\item {\bf Exercise 6} from \emph{A Brief Treatment of Set Theory}.
+
+\item {\bf Exercise 9} from \emph{A Brief Treatment of Set Theory}.
+
+\item {\bf Exercise 6} from \emph{A Brief Treatment of Logic}.
+
+%Exercises 3, 5, and 6 from \emph{A Brief Treatment of Logic}
+%will be {\bf due Monday 1/19/2015}. \\
+
+\end{enumerate}
+
+\noindent \underline{\hspace{3in}}\\
+
+
+%This lecture has been brought to you by ... Containers!
+
+%\hspace{4in} \includegraphics[scale=0.4]{jars}
+
+\end{document}
