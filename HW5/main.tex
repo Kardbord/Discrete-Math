@@ -1,0 +1,124 @@
+\documentclass[12pt]{article}
+ \usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,amsfonts}
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+
+%%%%  SHORTCUT COMMANDS  %%%%
+\newcommand{\ds}{\displaystyle}
+\newcommand{\Zi}{\mathbb{Z}}
+\newcommand{\arc}{\rightarrow}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Ni}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\stirling}[2]{\genfrac{\{}{\}}{0pt}{}{#1}{#2}}
+ 
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+ 
+\begin{document}
+ 
+%\renewcommand{\qedsymbol}{\filledbox}
+%Good resources for looking up how to do stuff:
+%Binary operators: http://www.access2science.com/latex/Binary.html
+%General help: http://en.wikibooks.org/wiki/LaTeX/Mathematics
+ 
+\title{Homework 5}
+\author{Tanner Kvarfordt - A02052217}
+\maketitle
+ 
+\begin{problem}{1}
+Recall $\stirling{n}{k}$ denotes the number of partitions of an $n$-set into $k$ blocks.  
+Please prove the following  identity (which is a recurrence relation for $\stirling{n}{k}$)
+$$\stirling{n}{k} = \stirling{n-1}{k-1} + k\stirling{n-1}{k},$$
+and be sure to indicate the range of $n$ and $k$ and also indicate any relationship between $n$ and $k$ that must hold for the identity to be true.
+\end{problem}
+
+\begin{proof}
+For this proof, I'll adopt the metaphor of placing people into rooms, where $n$ denotes the number of people to be placed into $k$ rooms. The left hand side of the relation simply denotes the number of ways to partition $n$ people into $k$ rooms. For the right hand side of the relation, we'll condition\footnote{Hopefully I am using this term correctly. I simply mean we will add some condition into consideration.} on one of the people of being placed into a room independently from the others. Without loss of generality, we'll call this person George. It then follows that there are two scenarios for the placement of George into a room. The first is that he will have a room of all his own, which means that the rest of the $n-1$ people would be placed into $k-1$ rooms. This can be clearly mathematically represented as $\stirling{n-1}{k-1}$. The second scenario is that George will not be unique to his own room. This means that there are $n-1$ people to be placed into $k$ rooms, with the number of possibilities for this action given by $\stirling{n-1}{k}$. Coupled with the fact that there are $k$ possibilities for George to be placed into one of these rooms, we have $k\stirling{n-1}{k}$. It then follows that the sum total of possibilities is given by $\stirling{n-1}{k-1} + k\stirling{n-1}{k}$, as shown in the right hand side of the relationship. In the end however, it is clear that we are still just placing $n$ people into $k$ rooms, thereby proving the relationship that $\stirling{n}{k} = \stirling{n-1}{k-1} + k\stirling{n-1}{k}$. This holds for $n,k \in\mathbb{N}$.
+\end{proof}
+
+\newpage
+
+\begin{problem}{2}
+Suppose $r,s,n \in \N$.  Please prove the identity (1) in two ways: combinatorially, and algebraically.
+\begin{eqnarray} \ds \sum_{i = 0}^n \binom{r}{i}\binom{s}{n-i} = \binom{r+s}{n} \label{Vandermonde} \end{eqnarray}.
+\end{problem}
+
+\begin{proof}[Proof 1]
+To prove this identity combinatorially, I will adopt the metaphor of grocery shopping. Without loss of generality, think of $r$ as the number of your favorite, but expensive foods. Think of $i$ as the number of these foods that you can afford to purchase on some shopping trip. Think of $s$ as the number of generic, bland, but tolerable and affordable food items that you will choose from to fill the remaining space in your cart with. Think of $n$ as the total number of food items you need to purchase on some shopping trip. So you must choose $i$ food items out of $r$, and $n-i$ items out of $s$, and do so until you have $n$ items. This represents the left hand side of the identity, $\sum_{i = 0}^n \binom{r}{i}\binom{s}{n-i}$. Or, put another way, from a sum total of $r+s$ food items, you must choose $n$ of them, which is represented in the right hand side of the identity, $\binom{r+s}{n}$. It is clear then, that both sides of the identity are counting the same thing, and therefore the identity $\sum_{i = 0}^n \binom{r}{i}\binom{s}{n-i} = \binom{r+s}{n}$ is verified.
+\end{proof}
+
+\begin{proof}[Proof 2]
+To prove this identity algebraically, multiply both sides of the identity by $x^n$:
+\begin{eqnarray}
+x^n\sum_{i = 0}^n \binom{r}{i}\binom{s}{n-i} = \binom{r+s}{n}x^n \nonumber
+\end{eqnarray}
+Then take the summation of both sides from $n=0$ to $n=r+s$:
+\begin{eqnarray}
+\sum_{n=0}^{r+s}\Bigg( x^n\sum_{i = 0}^n \binom{r}{i}\binom{s}{n-i} \Bigg) = \sum_{n=0}^{r+s}\binom{r+s}{n}x^n \nonumber
+\end{eqnarray}
+For now, disregard the left hand side of the current equation and focus on the right hand side. By the binomial theorem\footnote{See Dr. Brown's Meeting Notes Eleven}, it is clear that
+\begin{eqnarray}
+\sum_{n=0}^{r+s}\binom{r+s}{n}x^n = (1+x)^{r+s} \nonumber
+\end{eqnarray}
+Split the exponent:
+\begin{eqnarray}
+(1+x)^{r+s}=(1+x)^r (1+x)^s \nonumber
+\end{eqnarray}
+Then, again invoking the binomial theorem, we have
+\begin{eqnarray}
+(1+x)^r (1+x)^s = \Bigg(\sum_{j=0}^r \binom{r}{j}x^j \Bigg) \Bigg(\sum_{k=0}^s \binom{s}{k}x^k \Bigg) \nonumber
+\end{eqnarray}
+Now expand the summations:
+\begin{multline}
+\Bigg(\sum_{j=0}^r \binom{r}{j}x^j \Bigg) \Bigg(\sum_{k=0}^s \binom{s}{k}x^k \Bigg) \\ =  \Bigg( \binom{r}{0}x^0+\binom{r}{1}x^1+\binom{r}{2}x^2+\cdots+\binom{r}{r}x^r \Bigg) \Bigg( \binom{s}{0}x^0+\binom{s}{1}x^1+\binom{s}{2}x^2+\cdots+\binom{s}{s}x^s \Bigg) \nonumber
+\end{multline}
+Then multiply the two expansions together:
+\begin{multline}
+\Bigg( \binom{r}{0}x^0+\binom{r}{1}x^1+\binom{r}{2}x^2+\cdots+\binom{r}{r}x^r \Bigg) \Bigg( \binom{s}{0}x^0+\binom{s}{1}x^1+\binom{s}{2}x^2+\cdots+\binom{s}{s}x^s \Bigg) \\ = \binom{r}{0}\binom{s}{0}x^0 + \Bigg( \binom{r}{0}\binom{s}{1} + \binom{r}{1}\binom{s}{0}\Bigg)x^1 + \Bigg(\binom{r}{0}\binom{s}{2}+\binom{r}{1}\binom{s}{1}+\binom{r}{2}\binom{s}{0} \Bigg)x^2 + \cdots \nonumber
+\end{multline}
+From this pattern, we can conclude that the coefficient of $x^n$ would be
+\begin{eqnarray}
+\binom{r}{0}\binom{s}{n}+\binom{r}{1}\binom{s}{n-1}+\cdots+\binom{r}{n-1}\binom{s}{1}+\binom{n}{0}=\sum_{p=0}^n \binom{r}{p}\binom{s}{n-p} \nonumber
+\end{eqnarray}
+And from this we have the left hand side of the identity (since $p=i$), thereby proving the identity that
+\begin{eqnarray} \ds \sum_{i = 0}^n \binom{r}{i}\binom{s}{n-i} = \binom{r+s}{n} \label{Vandermonde} \nonumber \end{eqnarray}
+\end{proof}
+
+\begin{problem}{3}
+Suppose $n \in \N$. Please prove $\ds n2^{n-1} = \sum_{i \geq 0}\binom{n}{i}i$ combinatorially and algebraically.
+\end{problem}
+
+\begin{proof}[Proof 1]
+To prove this equality combinatorially, I will adopt the metaphor of choosing people for a team, where that team has a single captain. Take $n$ to be the number of people available to potentially be on the team. Take $i$ to be the number of people who will be selected for the team. Condition\footnote{Boy, I've used this twice now. Sure would be awkward if I was using it wrong.} on whether the captain is chosen prior to selecting the rest of the team, or afterward.
+
+To choose a team of $i$ people from a group of $n$ people and to choose one captain for that team, we have $\binom{n}{i}$, and $i$ possibilities for a captain, giving us $\binom{n}{i}i$ possibilities. We must also consider that depending on how many people, $i$, that we want on the team, we can have $i \leq n$, giving us a sum total of $\sum_{i \geq 0}\binom{n}{i}i$ possibilities for creating a team with one captain from $n$ people, which is the right hand side of the equality given in the problem statement, and which represents the scenario in which a team is picked first, and then a captain.
+
+If we pick the captain for the team first, we have $n$ possibilities for which individual will be captain. This leaves us with $n-1$ people for whom there are each two possibilities: to be on the team, or to not be on the team, so $2^{n-1}$. Since we need a team and a captain, we therefore have $n2^{n-1}$ possibilities for choosing a team. This is the left hand side of the equality given in the problem statement.
+
+It is clear then, that both sides of the equality are counting the same thing, and therefore the equality is valid.
+\end{proof}
+
+\begin{proof}[Proof 2]
+To prove this equality algebraically, consider the following binomial theorem variant:
+\begin{eqnarray}
+(1+x)^n = \sum_{i \geq 0}\binom{n}{i}x^i \nonumber
+\end{eqnarray}
+Taking the derivative of both sides with respect to $x$, we have
+\begin{eqnarray}
+n(1+x)^{n-1} = \sum_{i\geq 0}\binom{n}{i}ix^{i-1} \nonumber
+\end{eqnarray}
+Now consider $x=1$
+\begin{eqnarray}
+n(1+(1))^{n-1} = \sum_{i \geq 0} \binom{n}{i}i(1)^{i-1} \nonumber
+\end{eqnarray}
+Simplified, we have
+\begin{eqnarray}
+n2^{n-1} = \sum_{i \geq 0} \binom{n}{i}i \nonumber
+\end{eqnarray}
+Which brings us to the equality given in the problem statement, therefore proving that it is valid.
+\end{proof}
+
+\end{document}

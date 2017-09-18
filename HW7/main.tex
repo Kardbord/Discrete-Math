@@ -1,0 +1,146 @@
+\documentclass[12pt]{article}
+ \usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,amsfonts}
+\usepackage{mathtools}
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+ 
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+%If you want to title your bold things something different just make another thing exactly like this but replace "problem" with the name of the thing you want, like theorem or lemma or whatever
+ 
+\begin{document}
+ 
+%\renewcommand{\qedsymbol}{\filledbox}
+%Good resources for looking up how to do stuff:
+%Binary operators: http://www.access2science.com/latex/Binary.html
+%General help: http://en.wikibooks.org/wiki/LaTeX/Mathematics
+ 
+\title{Homework 7}
+\author{Tanner Kvarfordt - A02052217}
+\maketitle
+ 
+\begin{problem}{1}
+Please use two methods to find a closed formula for the recurrence $a_n = a_{n-1} + 2a_{n-2}+n$, for $n \geq 2$ with $a_0=0$ and $a_1=1$. One method must use the theory of generating functions; the other can be whatever you want.
+\end{problem}
+ 
+\begin{proof}[Claim]
+The closed formula for the recurrence is $a_n=\frac{4}{3}(2^n)-\frac{1}{12}(-1)^n-\frac{1}{2}n - \frac{5}{4}$.
+\end{proof}
+
+\begin{proof}[Proof of claim (not using generating functions)]
+To prove this claim, I will use the method for solving a non-homogeneous linear recurrence relation provided by Dr. Brown in meeting notes 19. \\
+\textit{Step 1}. Solve the homogeneous part of the recurrence. \\
+Do this by guessing that $a_n=q^n$ and determine the characteristic equation, then find the form of the closed formula for the homogeneous part:
+\[q^n =q^{n-1}+2q^{n-2}\]
+Divide by $q^{n-2}$:
+\[q^2 = q + 2\] 
+Set everything equal to zero and use the quadratic formula to solve for $q$:
+\[q^2 - q - 2 =0\]
+\[q = \frac{1 \pm \sqrt[]{1+8}}{2} = \frac{1 \pm 3}{2} = 2, -1\]
+So the closed formula for this homogeneous recurrence has the form $a_n=A(2^n)+B(-1)^n$ where $A$ and $B$ are constants to be determined later.\\
+\textit{Step 2}. Isolate the non-homogeneous part and try to identify the constants in its general form. \\
+Guess that the non-homogeneous part has the form $Cn+D$, where $C$ and $D$ are constants (assume $a_n=Cn+D$ then try to find $C$ and $D$ so it works):
+\[a_n=Cn+D=a_{n-1}+2a_{n-2}+n\]
+This tentatively implies the following:
+\[Cn+D=C(n-1)+D+2C(n-2)+2D+n\]
+So through some algebraic manipulation, we get:
+\[Cn+D=n(3C+1)-5C+3D\]
+Now equate the coefficients on $n$:
+\[C=3C+1\]
+\[D=-5C+3D\]
+Solve for C to see that $C=\frac{-1}{2}$, then solve for D:
+\[2D=5C\]
+so $D=\frac{-5}{4}$, and therefore $a_n=\frac{-1}{2}n-\frac{5}{4}$ \\
+\textit{Step 3}. Re-incorporate the homogeneous part and solve for the constants that remain using initial conditions.
+\[a_n=A2^n+B(-1)^n-\frac{1}{2}n-\frac{5}{4}\]
+Use the initial conditions, $a_0=0$, $a_1=1$, to find $A$ and $B$:
+\[a_0 = 0 = A+B-\frac{5}{4} \implies B=\frac{5}{4}-A\]
+\[a_1=1=2A-B-\frac{1}{2}-\frac{5}{4} = 2A-(\frac{5}{4}-A)-\frac{1}{2}-\frac{5}{4} \implies A=\frac{4}{3} \implies B=\frac{-1}{12}\]
+And therefore the closed formula for $a_n$ is
+\[a_n=\frac{4}{3}(2^n)-\frac{1}{12}(-1)^n-\frac{1}{2}n-\frac{5}{4}\]
+\end{proof}
+
+\begin{proof}[Proof of claim via theory of generating functions]
+Begin by multiplying each term of the recurrence by $x^n$, preserving equality, to get $a_nx^n=a_{n-1}x^n+2a_{n-2}x^n+nx^n$. Now, take the sum from $n \geq 0$ of each side, again preserving equality. Define the result to be the function $F(x)$, and consequently the closed formula for $a_n$ will be the coefficient on the $x^n$ term in $F(x)$.
+\[F(x)=\sum_{n \geq 0}a_nx^n=\sum_{n \geq 0}a_{n-1}x^n+\sum_{n \geq 0}2a_{n-2}x^n+\sum_{n \geq 0}nx^n\]
+To rearrange things into a form for which we know the generating function, we will do some manipulation with the indices. Let $l=n-1$ and $g=n-2$, allowing the equation to be rewritten as
+\[F(x)=\sum_{l \geq 0}a_{l}x^{l+1}+\sum_{g \geq 0}2a_{g}x^{g+2}+\sum_{n \geq 0}nx^n\]
+After doing some factoring:
+\[F(x)=x\sum_{l\geq 0}a_lx^l+2x^2\sum_{g \geq 0}a_gx^g+\sum_{n \geq 0}nx^n\]
+Notice that the first two summations are recurring $F(x)$ functions:
+\[F(x)=xF(x)+2x^2F(x)+\sum_{n \geq 0}nx^n\]
+Move all of the $F(x)$'s to the LHS and factor an $F(x)$, as well as replacing $\sum_{n \geq 0}nx^n$ with its generating function:
+\[F(x)(1-x-2x^2)=\frac{x}{(1-x)^2}\]
+\[F(x)=\frac{x}{(1-x-2x^2)(1-x)^2}=\frac{x}{(1+x)(1-2x)(1-x)^2}\]
+Perform a partial fraction decomposition($A$, $B$, $C$, $D$ are constants):
+\[F(x)=\frac{x}{(1+x)(1-2x)(1-x)^2}=\frac{A}{1-x}+\frac{B}{(1-x)^2}+\frac{C}{1+x}+\frac{D}{1-2x}\]
+I will spare this proof from the teeth-grinding calculations that are involved with partial fraction decompositions, and ask the reader to trust me that after solving for each constant, $A=-\frac{3}{4}$, $B=-\frac{1}{2}$, $C=-\frac{1}{12}$, and $D=\frac{4}{3}$, and therefore:
+\[F(x)=-\frac{1}{12(1-(-1)x)}+\frac{4}{3(1-2x)}-\frac{3}{4(1-x)}-\frac{1}{2(1-x)^2}\]
+Recognize several fundamental generating functions, and replace them with their summation forms:
+\[F(x)=-\frac{1}{12}\sum_{n \geq 0}(-1)^nx^n+\frac{4}{3}\sum_{n \geq 0}2^nx^n-\frac{3}{4}\sum_{n \geq 0}x^n-\frac{1}{2}\sum_{n \geq 0}(n+1)x^n\]
+And so
+\[[x^n]\{F(x)\}=-\frac{1}{12}(-1)^n+\frac{4}{3}(2^n)-\frac{3}{4}-\frac{1}{2}(n+1)\]
+\[[x^n]\{F(x)\}=-\frac{1}{12}(-1)^n+\frac{4}{3}(2^n)-\frac{3}{4}-\frac{1}{2}n - \frac{1}{2}\]
+\[[x^n]\{F(x)\}=-\frac{1}{12}(-1)^n+\frac{4}{3}(2^n)-\frac{5}{4}-\frac{1}{2}n\]
+and, as stated above, $[x^n]\{F(x)\}=a_n=-\frac{1}{12}(-1)^n+\frac{4}{3}(2^n)-\frac{5}{4}-\frac{1}{2}n$, and so we have our closed formula for $a_n$.
+\end{proof}
+
+\begin{problem}{2}
+Please use the theory of generating functions to determine the number of solutions to the equation $x_1+x_2+x_3+x_4=n$, where the variables are constrained in the following way: $x_1=2k$ for some $k \in\mathbb{N}$, $x_2 \in \{0,1,2\}$, $x_3 = 3q$ for some $q\in\mathbb{N}$, and $x_4\in \{0,1\}$.
+\end{problem}
+  
+\begin{proof}[Claim]
+The number of solutions to the given equation is $n+1$.
+\end{proof}
+
+\begin{proof}[Proof of claim]
+We can begin by creating the generating functions for $x_1$ through $x_4$. Let $A(x)$ be the generating function for $x_1$, $B(x)$ be the generating function for $x_2$, $C(x)$ be the generating function for $x_3$, and $D(x)$ be the generating function for $x_4$.
+\[A(x)=1 + x^2+x^4+x^6 +\cdots = \sum_{n \geq 0}x^{2n}=\frac{1}{1-x^2}\]
+\[B(x)=1+x+x^2\]
+\[C(x)=1+x^3+x^6+x^9+\cdots=\sum_{n \geq 0}x^{3n}=\frac{1}{1-x^3}\]
+\[D(x)=1+x\]
+Now define $F(x)$ to be the generating function for the number of solutions to the equation. Therefore we have $F(x)=A(x)B(x)C(x)D(x)=(\frac{1}{1-x^2})(1+x+x^2)(\frac{1}{1-x^3})(1+x)$. Through some algebraic manipulation, we can obtain the answer we are looking for.\\
+Factor the denominators of the fractions:
+\[F(x)=(\frac{1}{(1+x)(1-x)})(1+x+x^2)(\frac{1}{(1-x)(x^2+x+1)})(1+x)\]
+Cancel terms and get:
+\[F(x)=\frac{1}{(1-x)^2}\]
+For which we know\footnote{From class lecture on the 28th of March, 2017.} the power series expansion is:
+\begin{eqnarray}
+F(x)=\frac{1}{(1-x)^2}=\sum_{n \geq 0}(n+1)x^n
+\end{eqnarray}
+Since $F(x)$ is the generating function for the number of solutions to $x_1+x_2+x_3+x_4=n$, it is clear that the coefficient on $x_n$ in $F(x)$ gives the number of solutions to the equation, and therefore, as shown in equation 1 there are $[x^n]\{F(x)\} = n + 1$ solutions to the problem $x_1+x_2+x_3+x_4=n$
+\end{proof}
+
+\begin{problem}{3}
+Please revisit and re-solve the pizza problem using generating functions to obtain the closed formula $P(n)=\frac{1}{2}n^2+\frac{1}{2}n+1= {n\choose2} +n + 1$.
+\end{problem}
+
+\begin{proof}
+The recurrence for the pizza problem as given by Dr. Brown is $p_n=P_{n-1}+n$. To get the closed form by using generating functions, begin by multiplying each side by $x^n$, preserving equality, giving $p_nx^n=P_{n-1}x^n+nx^n$. Now take the sum from $n \geq 0$ of both sides, again preserving equality, and define the result to be the function $F(x)$:
+\[F(x)=\sum_{n \geq 0}p_nx^n=\sum_{n \geq 0}P_{n-1}x^n+\sum_{n \geq 0}nx^n\]
+Through the manipulations we've made, the closed form for the recurrence will be the coefficient on $x^n$ in $F(x)$, so this is what we will solve for. We know the generating function for the last summation, and so we can substitute that generating function in, giving
+\[F(x)=\sum_{n \geq 0}P_{n-1}x^n+\frac{x}{(1-x)^2}\]
+Now we can factor an $x$ out of the summation, and take into account that having negative slices (where n-1 < 0) just results in having the whole pizza (1 slice), then we can reindex the summation to begin at $1$ instead of $0$ and add a one to the whole thing in order to compensate for the case we lost by re-indexing.
+\[F(x)=x\sum_{n \geq 1}P_{n-1}x^{n-1}x^n+1+\frac{x}{(1-x)^2}\]
+Now we will monkey with the index of the summation some more. Let $l=n-1$:
+\[F(x)=x\sum_{l \geq 0}P_lx^l+1+\frac{x}{(1-x)^2} = xF(x)+1+\frac{x}{(1-x)^2}\]
+\[F(x)-xF(x)=\frac{x}{(1-x)^2}+1\]
+\[F(x)(1-x)=\frac{x}{(1-x)^2}+1\]
+\[F(x)=\frac{x}{(1-x)^3}+\frac{1}{1-x}\]
+Taking a partial fraction decomposition of the first fraction (I will spare this proof from the steps of doing this), we get
+\[F(x)=\frac{1}{1-x}-\frac{1}{(1-x)^2}+\frac{1}{(1-x)^3}\]
+We know the generating functions for the first two terms, but must discover the last one. Notice that the second and third term are very similar, so take a derivative of the second term to see if we can find anything interesting.
+\[\frac{d}{dx}\frac{1}{(1-x)^2}=\frac{2}{(1-x)^3}\]
+We can see that the derivative is equivalent to $2$ times the third term, for which we are searching for the generating function. Therefore the generating function for that third term is equivalent to the derivative of the generating function for the second term multiplied by $\frac{1}{2}$, leaving us with
+\[F(x)=\sum_{n \geq 0}x^n-\sum_{n \geq 0}(n+1)x^n+\frac{1}{2}\sum_{n \geq 0}(n+1)nx^{n-1}\]
+To massage the third summation into a form we like a bit more, let $g=n-1$.
+\[F(x)=\sum_{n \geq 0}x^n-\sum_{n \geq 0}(n+1)x^n+\frac{1}{2}\sum_{g \geq -1}(g+2)(g+1)x^{g}\]
+Since the $-1$ index results in a $0$ as the first term of the summation for the right-most sum, we can simply ignore that case and begin indexing at 0, at which point $g$ can be replaced by $n$ again since the equivalence holds.
+\[F(x)=\sum_{n \geq 0}x^n-\sum_{n \geq 0}(n+1)x^n+\frac{1}{2}\sum_{n \geq 0}(n^2+3n+2)x^{n}\]
+and therefore the coefficient on $x^n$ in $F(x)$ (which we established above as giving the closed formula for $P_n$) is given by
+\[[x^n]\{F(x)\}=1-n-1+\frac{1}{2}n^2+\frac{3}{2}n+1=\frac{1}{2}n^2+\frac{1}{2}n+1\]
+\end{proof}
+
+\end{document}

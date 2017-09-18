@@ -1,0 +1,90 @@
+\documentclass[12pt]{article}
+ \usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,amsfonts}
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+ 
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+%If you want to title your bold things something different just make another thing exactly like this but replace "problem" with the name of the thing you want, like theorem or lemma or whatever
+ 
+\begin{document}
+ 
+%\renewcommand{\qedsymbol}{\filledbox}
+%Good resources for looking up how to do stuff:
+%Binary operators: http://www.access2science.com/latex/Binary.html
+%General help: http://en.wikibooks.org/wiki/LaTeX/Mathematics
+%Or just google stuff
+ 
+\title{Homework 1}
+\author{Tanner Kvarfordt - A02052217}
+\maketitle
+
+\begin{center}
+************** Disclaimer: I expect I am probably pretty bad at this **************
+\end{center}
+ 
+\begin{problem}{1}
+Please interpret the quotation of Bertrand Russell given below and write an explanation you would use to a non-Mathematically
+indoctrinated friend (who is curious and patient enough to listen to you).
+\end{problem}
+ 
+\begin{quote}
+"To choose one sock from each of infinitely many pairs of socks requires the Axiom of Choice, but for shoes
+the Axiom is not needed." \newline - Bertrand Russell
+\end{quote}
+
+\begin{description}
+\item \textit{Explanation} The Axiom of Choice essentially states that given a collection of non-empty sets, it is possible to choose something from each set. Often, it is possible to do this without the axiom of choice, and instead relying on some formula or algorithm to make the choice. This is why, according to Bertrand Russell, the axiom of choice is not required for shoes. A selection of one shoe from each set could be made by using a formula; for example, choosing the right-footed shoe from each set. For socks however, there is no formulaic or algorithmic way to choose one sock from each set because each sock in a pair is identical to its partner, and so the axiom of choice must be invoked.
+\end{description}
+
+\begin{problem}{2}
+Define the set $E$ via the equation $E = \{x \in\mathbb{Z} : x$ is even\}; define the set $F$ via $F = \{y \in\mathbb{Z} : y = a + b$, where $a$ and $b$ are odd\}. Please prove that $E = F$. 
+\end{problem}
+
+\begin{proof}
+In order to prove $E = F$, it must be shown that $E \subseteq F$ and $F \subseteq E$. If those two things are true, then $E = F$.
+\newline
+\newline
+To show that $F \subseteq E$, I will show that $a + b$ denotes the same form as $x$. Because $x$ is even, it has, by definition, the form $x = 2k$ for some $k \in\mathbb{Z}$. Next, because $a$ and $b$ are odd numbers, they may be defined as 
+$a = 2z + 1$ for some $z \in\mathbb{Z}$, and $b = 2v + 1$ for some $v \in\mathbb{Z}$. Therefore $a + b = (2z + 1) + (2v + 1) = 2z +2 v + 2 = 2(z + v + 1)$. By the definitions given for $z$, $v$, and $k$, it is shown that $2(z + v + 1)$ is identical to the form $2k$. Therefore $a + b$ denotes the same form as $x$, and subsequently, $F \subseteq E$.
+\newline
+\newline
+To show that $E \subseteq F$, I will show that $x = 2k$ where $k \in\mathbb{Z}$ denotes the same form as $a + b$. As above, it is shown that $a + b = (2z + 1) + (2v + 1)$. It can also be shown that $x = 2k = (2k + 1) - 1$, and from there that $(2k + 1) - 1 = (2k + 1) + (2(-1) + 1)$. Because $-1 \in\mathbb{Z}$, it is shown that $(2k + 1) + (2(-1) + 1)$ denotes the same form as $a + b = (2z + 1) + (2v + 1)$. Therefore, $x$ denotes the same form as $y = a + b$, and subsequently $E \subseteq F$.
+\newline
+\newline
+Because it is shown that both $E \subseteq F$ and $F \subseteq E$, it is proven that $E = F$.
+\end{proof}
+
+\begin{problem}{3}
+Suppose $x$ is a positive integer with $n$ digits, say $x = d_1d_2d_3\ldots d_n$. In other words, $d_i \in \{0, 1, 2,\ldots, 9\}$ for $1\leq i \leq n$, but $d_1 \ne 0$. Please prove the following. Recall that, for $a, b \in\mathbb{Z}$, a is a \textbf{divisor} of $b$ if $b = ak$, for some $k\in\mathbb{Z}$.
+\begin{description}
+\item \textbf{(a)} If $9$ is a divisor of $d_1 + d_2 + \cdots d_n$, then $9$ is a divisor of $x$.
+\end{description}
+\end{problem}
+
+\begin{proof}
+Any positive integer may be written as a base-ten expansion. In the case of $x$ as defined in the problem statement, this expansion is defined as follows: $x = d_1 \cdot 10^{n - 1} + d_2 \cdot 10^{n-2} + \cdots + d_n \cdot 10^0$. Note that $d_n \cdot 10^0 = d_n$. It is also important to note that it is clear through the problem statement that $n \in\mathbb{Z^+}$. For lack of a better way to describe a manipulation I desire to make to the base-ten expansion of $x$, and for fun, I will define some new mathematical notation. Let $h^{->m}$, for some $h,m \in\mathbb{Z^+}$, be some integer represented by $m$ $h$'s. For example, $9^{->2} = 99$, $9^{->4} = 9999$, etc. Now, reconsider the base-ten expansion of $x$: \newline $x = d_1 \cdot 10^{n - 1} + d_2 \cdot 10^{n-2} + \cdots + d_n \cdot 10^0 = d_1(9^{->(n-1)} + 1) + d_2(9^{->(n-2)} + 1) + \cdots + d_n \newline = d_1(9^{->(n-1)}) + d_2(9^{->(n-2)}) + \cdots + d_1 + d_2 + \cdots + d_n$
+\newline
+By the definition of a divisor given in the problem statement and by the distributive theorem, 9 is a divisor of the quantity of everything up to $d_1$ in the base-ten expansion of $x$; that is, there is some $k \in\mathbb{Z}$ such that $d_1(9^{->(n-1)}) + d_2(9^{->(n-2)}) + \cdots = 9k$. Therefore, 9 is a divisor of $x$ \textit{if, and only if} 9 is a divisor of $(d_1 + d_2 + \cdots + d_n)$.
+\end{proof}
+
+\begin{description}
+\item \textbf{(b)} If $d_n = 0$ or $d_n = 5$, then 5 is a divisor of $x$.
+\end{description}
+
+\begin{proof}
+Any positive integer may be written as a base-ten expansion. In the case of $x$ as defined in the problem statement, this expansion is defined as follows: $x = d_1 \cdot 10^{n - 1} + d_2 \cdot 10^{n-2} + \cdots + d_n \cdot 10^0$. Note that $d_n \cdot 10^0 = d_n$. It is also important to note that it is clear through the problem statement that $n \in\mathbb{Z^+}$. Now consider the set $E := \{w: w = n - q$, where $n \in\mathbb{Z^+}$ and $q$ is an integer greater than or equal to $0\}$. By the definition of a divisor in the problem statement, as well as the nature and convention of the number 10, 5 will always be a divisor of $10^w$; that is, there is some $k \in\mathbb{Z}$ such that $10^w = 5k$. And so, by the distributive theorem, 5 is a divisor of the quantity of everything up to $d_n$ in the base-ten expansion of $x$; that is, there is some $k \in\mathbb{Z}$ such that $d_1 \cdot 10^{n - 1} + d_2 \cdot 10^{n-2} + \cdots = 5k$. Therefore, 5 is a divisor of $x$ if 5 is a divisor of $d_n$. Therefore 5 is a divisor of $x$ \textit{if, and only if} $d_n = 0$ or $d_n = 5$, as shown by $0 = 5(0)$ and $5 = 5(1)$.
+\end{proof}
+
+\begin{problem}{4}
+Please prove or disprove: \textit{If} $n \in\mathbb{Z}^+$, \textit{then} $n^2 + n + 41$ \textit{is prime}.
+\end{problem}
+
+\begin{proof}[Disproof]
+The given statement can be disproved by contradiction - that is, there is at least one scenario for which the statement is not true.
+To begin, I will define what a divisor is. $a$ is a divisor of $b$ if $b = ak$ where $k \in\mathbb{Z}$. Secondly, a prime number is defined as a number that has only itself, and $1$ as divisors, for example, the number $7$. $7 = 1(7)$, $7 = 7(1)$, and no other combinations are possible. To contradict the problem statement, I will take $n$ to be $41$. $41^2 + 41 + 41 = 1763$. $1763$ is not a prime number because $41$ is a divisor of it, as shown: $1763 = 41(43)$. This contradicts the idea that the result of the statement will always be a prime number, therefore, the statement \textit{"If} $n \in\mathbb{Z^+}$, $then$ $n^2 + n + 41$ \textit{is prime"} is false.
+\end{proof}
+
+\end{document}

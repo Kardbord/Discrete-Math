@@ -1,0 +1,138 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,amsfonts}
+\usepackage{tabularx}
+\usepackage{threeparttable}
+\usepackage{amsmath}
+\usepackage{array}
+\newcolumntype{C}{>$c<$}
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+ 
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+ 
+\begin{document}
+ 
+\title{Math 3310 Homework 2}
+\author{Tanner Kvarfordt - A02052217}
+\maketitle
+ 
+\begin{problem}[Formal Systems Prompt]{1}
+Understand the $\{M,U,I\}$-system well enough to state and prove a metatheorem about what strings are in $S$.
+\begin{description}
+\item \textbf{Axiom 0:} $MI \in S$
+\item \textbf{Axiom 1:} $xI \in S \Longrightarrow xIU \in S$
+\item \textbf{Axiom 2:} $Mx \in S \Longrightarrow Mxx \in S$
+\item \textbf{Axiom 3:} $xIIIy \in S \Longrightarrow xUy \in S$
+\item \textbf{Axiom 4:} $xUUy \in S \Longrightarrow xy \in S$
+\end{description}
+\end{problem}
+ 
+\begin{proof}
+%The metatheorem I will prove is that if a string has an $M$ anywhere but as the first character, it does not belong to $S$. Because axiom 0 is the only axiom which guarantees a certain string to be in $S$, $MI$ is the root of all strings in $S$. All other strings in $S$ are manipulations of $MI$ via the other axioms. It then logically follows that in order for an $M$ to end up as anything but the first character in a string that belongs to $S$, an axiom must allow for the first character to be considered a variable, or a component of a variable such as $x$ and/or $y$ as noted in the axioms. Axioms 1, 3, and 4 are the only axioms that provide this condition. However, for each of these axioms, the variable characters remain fixed as the first character slot in the string. Therefore it is impossible for a string belonging to $S$ to contain an $M$ anywhere but the first character slot.
+Take a string (as defined in Dr. Brown's \textit{An introduction to formal systems, and therefore to Mathematics}) to have the form $w_1w_2\ldots w_i$ where $w_i$ represents the $i$th character in the string. The metatheorem I will prove is that the character $M$ must be present in a string \textit{exclusively} as $w_1$ in order for that string to be a member of $S$. That is, the character $M$ \textit{must} be present as the first character of a string, and be present \textit{nowhere else} in that string in order for that string to possibly be a member of $S$. This can be proven by the fact that axiom 0 is the only axiom to guarantee that a specific string is in $S$, that string being $MI$. Through the other axioms, the characters of $MI$ may be manipulated. In order for the character $M$ to appear anywhere other than $w_1$, an axiom must allow for one of two things:
+\begin{description}
+\item{1)} for an $M$ to be substituted for another character or group of characters
+\item or
+\item{2)} for the character in the $w_1$ position (which we've established will always be $M$) to change to a different position
+\end{description}
+
+None of the axioms allow for either of these manipulations. Therefore, the character $M$ \textit{must} be present as the first character of a string, and be present \textit{nowhere else} in that string in order for that string to possibly be a member of $S$.
+\end{proof}
+\newpage
+\begin{problem}[Set Theory Exercise]{6}
+Let $P = \{(a,b,c): a,b,c \in\mathbb{Z}$, and $a^2 + b^2 = c^2\}$, and $T = \{(p,q,r) : p = x^2 - y^2, q =2xy$, and $r=x^2 + y^2$, where $x,y \in\mathbb{Z}\}$. Show that $T \subseteq P$.
+\end{problem}
+
+\begin{proof}
+If it can be shown that $p$, $q$, and $r$ have the same form as $a$, $b$, and $c$, it would then clearly follow that $T \subseteq P$. That is, if $p^2 + q^2 = r^2$ (the same form as $a^2 + b^2 = c^2$), then $p,q,r\in P$, and therefore $T \subseteq P$. So
+\newline 
+$p^2 + q^2 = r^2$
+\newline
+$= (x^2-y^2)^2 + (2xy)^2 = (x^2+y^2)^2$
+\newline
+$= x^4 -2x^2y^2 + y^4 + 4x^2y^2= x^4 +2x^2y^2 + y^4$
+\newline
+$= x^4 + 2x^2y^2 + y^4 = x^4 +2x^2y^2 + y^4$
+\newline
+shows that $p^2 + q^2 = r^2$, which is analogous to $a^2 + b^2 = c^2$ because $x,y,a,b,c \in\mathbb{Z}$. Therefore $p,q,r\in P$, and therefore $T \subseteq P$.
+\end{proof}
+
+\begin{problem}[Set Theory Exercise]{9}
+Determine, with proof, the number of ordered triples $(A_1,A_2,A_3)$ of sets which have the property that 
+$A_1 \cup A_2 \cup A_3 = \{1,2,3,4,5,6,7,8,9,10\}$, and \newline
+$A_1 \cap A_2 \cap A_3 = \varnothing$. Express the answer in the form $2^a3^b5^c7^d$ where $a$, $b$, $c$, $d$ are non-negative integers.
+\end{problem}
+
+\begin{proof}
+In order to determine the number of ordered triples $(A_1,A_2,A_3)$ of sets with the stated properties, the number of unique ways each element may appear in the sets must be determined. Take $x$ to represent some element of $A_1 \cup A_2 \cup A_3$, that is $x \in (A_1 \cup A_2 \cup A_3)$. In order to also meet the criteria that $A_1 \cap A_2 \cap A_3 = \varnothing$, $x$ can be present in no more than two of the sets, but must be present in as few as one, and therefore there are 6 possible configurations by which $x$ can be present in $A_1,A_2,A_3$, as shown in the table below:
+
+\begin{table}[ht]
+\caption{Legal possibilities for the presence of $x$ in sets $A_1,A_2,A_3$} % title of Table
+\centering                                          % used for centering table
+\begin{tabular}{c c c c}                              % centered columns (3 columns)
+\hline\hline                                        %inserts double horizontal lines
+Configuration & $A_1$ & $A_2$ & $A_3$ \\ [0.5ex] % inserts table
+%heading
+\hline                                             % inserts single horizontal line
+1 & T & F & F \\                              % inserting body of the table
+2 & F & T & F \\
+3 & F & F & T \\
+4 & T & T & F \\
+5 & F & T & T \\
+6 & T & F & T \\ [1ex]                        % [1ex] adds vertical space
+\hline                                             %inserts single line
+\end{tabular}
+\begin{tablenotes}
+\centering
+\small 
+\item T denotes the presence of $x$ in the corresponding set, while F denotes its absence
+\end{tablenotes}
+\label{table:xpos}                               % is used to refer this table in the text
+\end{table}
+Any other configurations of $x$ in the three sets would violate the properties set forth in the problem statement. Therefore there are 6 possible configurations by which $x$ can be present in $A_1,A_2,A_3$, which is analogous to stating that for each element in the desired outcome of the union of $A_1,A_2,A_3$, there are 6 possible configurations by which that element may be present in the ordered triple of sets. Because our desired union of sets is the set $\{1,2,3,4,5,6,7,8,9,10\}$ (a set of 10 elements), and because each element has 6 possible configurations, there are therefore $2^{10} \cdot 3^{10} \cdot 5^0 \cdot 7^0 = 6^{10}$ possible ordered triples of sets.
+\end{proof}
+\newpage
+\begin{problem}[Logic Exercise]{6}
+Prove or disprove that $\{M,\Phi,\neg,\lor,\land,\implies\}$ can be reduced to $\{M,\Phi,\triangledown\}$, where $x\triangledown y$ is equivalent to $\neg(x\lor y)$.
+\end{problem}
+\begin{proof}
+By definition, two operations, two operators, or an operator and operation are equal if they have the same truth table (see Dr. Brown's \textit{A Brief Treatment of Logic}). The following four truth tables show that $\neg,\lor,\land,$ and $\implies$ can all be expressed using $\triangledown$, and therefore that $\{M,\Phi,\neg,\lor,\land,\Rightarrow\}$ can be reduced to $\{M,\Phi,\triangledown\}$. The last two columns of each table show the final result of the truth table.
+\begin{center}
+$\begin{array}{|c|c|c|c|c|} \hline P & Q & P \triangledown Q & (P \triangledown Q) \triangledown (P \triangledown Q) & P \lor Q \\
+\hline
+T & T & F & T & T \\
+T & F & F & T & T \\
+F & T & F & T & T \\
+F & F & T & F & F \\\hline
+\end{array}$
+\ 
+$\begin{array}{|c|c|c|c|c|c|} \hline P & Q & P \triangledown P & Q \triangledown Q &(P \triangledown P) \triangledown (Q \triangledown Q) & P \land Q \\
+\hline
+T & T & F & F & T & T \\
+T & F & F & T & F & F \\
+F & T & T & F & F & F \\
+F & F & T & T & F & F \\\hline
+\end{array}$
+\newline
+\vspace*{0.5in}
+\newline
+$\begin{array}{|c|c|c|c|c|c|} \hline P & Q & P \triangledown P & (P \triangledown P) \triangledown Q & ((P \triangledown P) \triangledown Q) \triangledown ((P \triangledown P) \triangledown Q) & P \implies Q \\
+\hline
+T & T & F & F & T & T \\
+T & F & F & T & F & F \\
+F & T & T & F & T & T \\
+F & F & T & F & T & T \\\hline
+\end{array}$
+\hspace{0.2in}
+$\begin{array}{|c|c|c|} \hline P & P \triangledown P & \neg P \\
+\hline
+T & F & F \\
+F & T & T \\\hline
+\end{array}$
+\end{center}
+\end{proof}
+
+\end{document}

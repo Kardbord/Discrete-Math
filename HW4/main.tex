@@ -1,0 +1,91 @@
+\documentclass[12pt]{article}
+ \usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,amsfonts}
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\fallfac}[2]{{#1}^{\underline{#2}}}
+\newcommand{\stirling}[2]{\genfrac{\{}{\}}{0pt}{}{#1}{#2}}
+
+ 
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+ 
+\begin{document}
+ 
+%\renewcommand{\qedsymbol}{\filledbox}
+%Good resources for looking up how to do stuff:
+%Binary operators: http://www.access2science.com/latex/Binary.html
+%General help: http://en.wikibooks.org/wiki/LaTeX/Mathematics
+ 
+\title{Homework 4}
+\author{Tanner Kvarfordt - A02052217}
+\maketitle
+
+\noindent{\bf Homework \#4:} ({\bf Due 2/10/2017}).\\ % Dave Rules!
+
+\noindent  Consider functions $f:A \to B$, where $A$ is a finite set with $n$ elements and $B$ is a finite set with $x$ elements.
+The table below has 12 entries for each of the possibilities corresponding to various properties $f$, $A$, and $B$ have.
+The function $f$ may be injective, surjective, or unrestricted.  The sets $A$ and $B$ may consist of elements that are distinguishable or indistinguishable
+(like socks versus shoes).
+
+Recall that, if $A$ and $B$ are sets, the notation $B^A$ stands for the set of all function that map $A$ into $B$.
+Recall that $f:A \stackrel{1-1}{\longrightarrow} B$ denotes that $f$ is a function from $A$ into $B$ that is injective.
+Recall that $f:A \stackrel{\mbox{onto}}{\longrightarrow} B$ denotes that $f$ is a surjective function mapping $A$ into $B$.
+
+The goal is count the number of functions with the properties indicated by the row and column headings in the table.
+For example, in entry number $5$ should be the number of functions that are injective that map $n$ indistinguishable objects to $x$ distinguishable objects.
+In Math-porn, this is
+$$\left|\left\{f \in B^A : A=\{a_1,a_2, \dots, a_n\}, |B| = x, f:A \stackrel{1-1}{\longrightarrow} B  \right\} \right|.$$
+While entry $12$ should house the number
+$$\left|\left\{f \in B^A : |A|=n, B =\{b_1,b_2, \dots, b_x\}, f:A \stackrel{\mbox{onto}}{\longrightarrow} B  \right\} \right|.$$
+
+$$\begin{array}{c|c||c|c|c}
+\hline A & B & \mbox{unrestricted }& \mbox{injective}& \mbox{onto} \\ \hline \hline
+\mbox{distinguishable} & \mbox{distinguishable} & 1. & 2. & 3. \\ \hline
+\mbox{indistinguishable}& \mbox{distinguishable}&4.&5.&6. \\ \hline
+\mbox{distinguishable} & \mbox{indistinguishable}& 7. & 8. & 9. \\ \hline
+\mbox{indistinguishable}&\mbox{indistinguishable}& 10. &11.&12. \\ \hline \end{array}$$\\
+
+\noindent Please determine, with proof, the entries 2, 3, 5, 6, and 9 in the table.\\
+
+\noindent \textit{Proofer's note:} In the interest of making these problems easier to discuss in plain English, I will adopt the "putting balls into boxes" analogy, where set $A$ represents a finite set of $n$ balls, set $B$ represents a finite set of $x$ boxes, and we are finding the number of ways to put the $n$ balls into the $x$ boxes under the conditions listed for each problem in the table.
+
+\newpage
+\begin{problem}{2}
+\end{problem}
+\begin{proof}
+Given that the function $f$ between $A$ and $B$ is one-to-one by the restrictions provided for this problem, it is clear that if $n > x$ then the number of possible functions matching the restrictions is 0, as no one-to-one function would be possible. Now consider the situation where $n \leq x$. There are $x$ ways to initiate placing the balls into the boxes, followed by $x-1$ ways to perform the next placement. This pattern continues, giving:
+\begin{equation}
+(x)(x-1)(x-2)\dots(x-n+2)(x-n+1) %= \frac{x!}{(x-n)!}
+\end{equation}
+Dr. Brown's Meeting Notes 10, Theorem 2.7.2, shows that equation 1 (above) is equivalent to $ \fallfac{x}{n}$, and therefore there are $ \fallfac{x}{n}$ possible ways to put balls into boxes under the given restrictions\footnote{One may find it interesting to know that it can be shown through theorems 2.7.2 and 2.9.2 in Meeting Notes 10 that $\fallfac{x}{n} = \frac{x!}{(x-n)!}$. However, I don't desire to. So I leave you, the reader, with the fact that there are $\fallfac{x}{n}$ possible combinations as an answer to problem 2.}.
+\end{proof}
+
+\begin{problem}{3}
+\end{problem}
+\begin{proof}
+To begin this proof, temporarily remove the restriction that the boxes are labeled for this problem. We will take that back into consideration in a moment. After doing so, refer to problem 9 to see that, with an onto function, balls labeled, and boxes unlabeled, the number of possibilities for putting balls into boxes is $\stirling{n}{x}$. Now, to determine the number of possibilities with \textit{both} balls and boxes labeled, we need only factor in the permutations of the boxes, that is, the permutations of $x$. To do so, we multiply by $x!$, giving $x!\stirling{n}{x}$ possibilities for putting balls into boxes for the restrictions presented by this problem. Note that this is only true as long as $x < n$, that is, as long as there are less boxes than balls. Otherwise, no onto function is possible, and so there are 0 possibilities.
+\end{proof}
+
+\begin{problem}{5}
+\end{problem}
+\begin{proof}
+To begin this proof, temporarily remove the restriction that balls are indistinguishable in this problem. We will add that consideration back in later. By removing this restriction, we see that the number of possibilities is the same as in problem 2 since the problem statements then become identical. So we see that the number of possibilities would be $\frac{x!}{(x-n)!} = \fallfac{x}{n}$. Now, however, we will take into consideration that the balls are indistinguishable. To account for this fact, we must remove all permutations of $n$ from the equation, and so we multiply by $1$ over $n!$, giving $\frac{1}{n!} \cdot \frac{x!}{(x-n)!}$, which, as defined by Dr. Brown in Meeting Notes Ten, is equivalent to $x \choose{n}$, and so there are $x \choose{n}$ possibilities for putting balls into boxes under the given restrictions as long as $n \leq x$. Otherwise, because the function must be one-to-one, it is clear that there are $0$ possibilities.
+\end{proof}
+
+\newpage
+\begin{problem}{6}
+\end{problem}
+\begin{proof}
+Given that the function $f$ between $A$ and $B$ is onto by the the restrictions provided for this problem, it is clear that if $x > n$, then the number of possible functions matching the restrictions is 0, as no onto function would be possible. That is, if there are more boxes than balls, then it is impossible for every box to contain a ball. However, if $x \leq n$, then functions are possible. Consider the fact that $f$ is onto, and the fact that the balls are unlabeled for this problem. In order for the function to be onto, there must be at least one ball in every box, and because the balls are unlabeled, it makes no difference which balls these are. That leaves us $n-x$ balls whose fate must be decided. For clarity, I feel that I must emphasize the fact that out of $n$ balls, at least $x$ of those balls' fates are predetermined (since there must be at least one ball per box), and because they are unlabeled, we are really only concerned with how many ways $n-x$ balls may be mapped to each box. \\ 
+\indent Here, I will introduce multiset numbers, notated as $\left(\!\left(p \atop y \right)\!\right)$, and defined by Dr. Brown in Meeting Notes 10 as ``the number of multisets of size $y$ built from a basis set of size $p$.'' Translated into plainer English, this definition is akin to ``the number of unique sets of size $y$ that can be created from an initial set of size $p$.'' Now return to the fact that we must decide the fate of $n-x$ balls. In order to map these balls to boxes, we must determine how many ways can we assign each ball to a box - that is, how many unique ways we can take $x$ boxes and determine which box each of $n-x$ balls belongs to. Mathematically, the answer to this can be written as $\left(\!\left(x \atop n-x \right)\!\right)$, and therefore there are $\left(\!\left(x \atop n-x \right)\!\right)$ possibilities for putting balls into boxes as long as $x \leq n$.
+\end{proof}
+
+\begin{problem}{9}
+\end{problem}
+\begin{proof}
+Given that the function $f$ between $A$ and $B$ is onto by the the restrictions provided for this problem, it is clear that if $x > n$, then the number of possible functions matching the restrictions is 0, as no onto function would be possible. That is, if there are more boxes than balls, then it is impossible for every box to contain a ball. However, if $x \leq n$, then functions are possible. Because balls are labeled and boxes are unlabeled in this problem, we are searching for the number of ways to partition $n$ distinct balls into $x$ undistinguished boxes. This statement is equivalent to the definition given in Dr. Brown's Meeting Notes Nine for the partition of a set, or the Stirling Numbers of the Second Kind\footnote{Denoted with "$\stirling{w}{q}$" and meaning the number of ways to partition a set with $w$ elements into $q$ blocks. See Dr. Brown's Meeting Notes Nine for a more rigorous definition.}. Therefore, there are $\stirling{n}{x}$ possibilities for putting balls into boxes as long as $x \leq n$. 
+\end{proof}
+
+\end{document}

@@ -1,0 +1,91 @@
+\documentclass[12pt]{article}
+ \usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,amsfonts}
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+ 
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\usepackage{amsthm}
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+ 
+\newtheorem*{thm}{Theorem (The Principle of Mathematical Induction)} % Yes I know this isn't how you're supposed to do this...
+ 
+\begin{document}
+ 
+%\renewcommand{\qedsymbol}{\filledbox}
+%Good resources for looking up how to do stuff:
+%Binary operators: http://www.access2science.com/latex/Binary.html
+%General help: http://en.wikibooks.org/wiki/LaTeX/Mathematics
+ 
+
+ 
+\title{Homework 6}
+\author{Tanner Kvarfordt - A02052217}
+\maketitle
+
+\paragraph{\bf Homework \#6:} \hspace{0pt} \\
+The Fibonacci Sequence is the sequence $(F_0,F_1,F_2,\dots F_n,\dots)$ created by the recurrence $F_n=F_{n-1}+F_{n-2}$ for $n \geq 2$ with $F_0 = 0$, and $F_1=1$. $F_n$ is called the nth Fibonacci number.\\
+\indent \textit{Principle of Mathematical Induction} (PMI) is an axiom of the system of basic arithmetic on the nonnegative integers. It can also be seen as a theorem derived from the \textit{Well-ordering property}. We'll discuss these in the sequel. For now:
+
+\begin{thm}
+If $A \subseteq \N$ and $x \in A \implies x +1 \in A$, then $A=\N$.
+\end{thm}
+
+\indent All of the following identities you are asked to prove can be proved with the Principle of Mathematical Induction, but combinatorial proofs are preferred. Please try to use both tactics for each proof.
+
+%\begin{proof}[Proofer's Note]
+%For problems 1 and 2 involving the Fibonacci Sequence, I will be using the same metaphor to prove the respective identities %combinatorially, and so rather than present it twice, I will just lay the foundations of the metaphor here and expand on it as needed %in the problems. This metaphor relies heavily on Dr. Brown's in-class definition\footnote{given in class on 2/23/17} of the Fibonacci %Sequence, which defines $F_n$ as the number of sequences of $1$'s and $2$'s that sum to $n-1$. Now, for the metaphor. Consider choosing %a team of $n$ elementary school kids to be on a kickball team. Being elementary-aged children, some will want to be on a team with a %friend, and so our team of $n$ will be composed of individual picks of either $1$ child or $2$ children. Since $F_n :=$ the number of %sequences of $1$'s and $2$'s that sum to $n-1$, then it logically follows that $F_{n+1} :=$ the number of sequences of $1$'s and $2$'s %that sum to $n$, which describes our situation of choosing $n$ children for a team. Therefore $F_{n+1}$ gives the number of ways to %choose a team of $n$ children in groups of $1$ or $2$ children. For now, this is where I will leave off the metaphor. It will be %expanded on as necessary in each proof.
+%\end{proof}
+
+\begin{problem}{1}
+Please prove the identity $F_{n+2}=1+ \sum_{i=0}^n F_i$.
+\end{problem}
+ 
+\begin{proof}
+This will be a proof by induction. As a base case, consider $F_2 = 1$, as we know by the definition given in the homework description. Through some manipulation (and given that $F_0 = 0$ in the homework description), we can see that
+\begin{eqnarray}
+F_2 = 1 = 1 + 0 = 1 + F_0 = 1 + \sum_{i=0}^0 F_i, \nonumber
+\end{eqnarray}
+the far right side of which is essentially the identity we are trying to prove (if we consider $n$ to be $0$). Since the identity held for the base case, let's assume it will for any case. Now, since we assume it holds for $n$ (or $F_{n+2}$, however you want to look at it), it must also hold for $n+1$ (or $F_{n+3}$ if that's how you see the world). This gives us
+\begin{eqnarray}
+F_{n+3} = 1 + \sum_{i=0}^{n+1} F_i, \nonumber
+\end{eqnarray}
+and through some basic mathematical manipulation with the summation, we see that
+\begin{eqnarray}
+F_{n+3} = 1 + \sum_{i=0}^{n+1} F_i = 1 + F_{n+1} + \sum_{i=0}^{n} F_i \nonumber
+\end{eqnarray}
+We assumed previously that $1+ \sum_{i=0}^{n} F_i = F_{n+2}$, so we are left with
+\begin{eqnarray}
+F_{n+3} = F_{n+2} + F_{n+1} \nonumber
+\end{eqnarray}
+which we know to be true because it is simply a restatement of the recurrence function for the Fibonacci Sequence that was given in the homework description. Therefore, the identity that $F_{n+2}=1+ \sum_{i=0}^n F_i$ is true by induction.
+\end{proof}
+
+\begin{problem}{2}
+Please prove the identity $F_{n+1}= \sum_{i=0}^{\lfloor \frac{n}{2} \rfloor} \binom{n-i}{i}$
+\end{problem}
+
+\begin{proof}
+This proof depends heavily upon Dr. Brown's definition\footnote[2]{See meeting notes thirteen} of the Fibonacci numbers as $F_n$ being the number of sequences of $1$s and $2$s that sum to $n-1$ for $n > 0$. It clearly follows then that $F_{n+1}$ would represent the number of sequences of $1$s and $2$s that sum to $n$. For this proof, consider the problem of providing seating for $n$ people exactly, that is, with no empty seats. The seating devices at your disposal are chairs, each of which seats exactly one person, and benches, each of which seats exactly two people. By the definition just given, the number of possibilities for solving this problem is represented by $F_{n+1}$, the left hand side of the identity. To see that the right hand side of the identity is counting the same thing, consider our options for choosing seating arrangements, and condition on how many benches will be used in each option. It is clear that $\lfloor \frac{n}{2} \rfloor$ is the maximum possible number of benches that can be used without having empty seats. If we decide to use exclusively chairs, we would have $n$ chairs, having chosen none to be benches. This is mathematically represented of course by $n \choose 0$. In another case, we may want $1$ bench, and so we would have $n-1$ total seating devices, since we would have $n-2$ chairs and $1$ bench. So mathematically, this is ${n-1}\choose 1$\footnote[3]{In this case, of the $n-1$ seating total seating devices, we are choosing $1$ to be a bench}. The pattern continues, yielding
+\begin{eqnarray}
+{n \choose 0} + {n-1\choose 1} + {n-2\choose 2} + {n-3\choose 3} + \cdots + {n -\lfloor \frac{n}{2} \rfloor\choose \lfloor \frac{n}{2} \rfloor} \nonumber
+\end{eqnarray}
+This can of course be rewritten as a summation, giving us
+\begin{eqnarray}
+{n \choose 0} + {n-1\choose 1} + {n-2\choose 2} + {n-3\choose 3} + \cdots + {n -\lfloor \frac{n}{2} \rfloor\choose \lfloor \frac{n}{2} \rfloor} = \sum_{i=0}^{\lfloor \frac{n}{2} \rfloor} {n-i \choose i} \nonumber
+\end{eqnarray}
+which is the right hand side of the identity, thereby showing that the two sides of the equation both count the number of possibilities to seat $n$ people using a combination of benches and chairs, and therefore proving the identity that $F_{n+1}= \sum_{i=0}^{\lfloor \frac{n}{2} \rfloor} \binom{n-i}{i}$.
+\end{proof}
+
+\begin{problem}{3}
+Please prove the identity $\left(\!\left(n \atop k \right)\!\right) = \sum_{i=0}^{n-1} \left(\!\left(n-i \atop k-1 \right)\!\right)$
+\end{problem}
+
+\begin{proof}
+To prove this identity, I will take on the metaphor of cereal shopping. You've recently won the lottery, and decide that cereal is a good investment. But since you don't know how investments work, instead of purchasing Kellogg shares, you head to your local grocery store to buy a $k$-set of cereals from the store's $n$-set of selections. Mathematically, this is given by $\left(\!\left(n \atop k \right)\!\right)$, the left hand side of the above identity. On your way to the store, you start thinking about how much you love Fruity Pebbles\texttrademark. If you were to purchase a box of Fruity Pebbles\texttrademark, then mathematically you would still have $\left(\!\left(n \atop k - 1 \right)\!\right)$ possibilities for the rest of your $k$-set. But then you begin thinking, what if you don't want Fruity Pebbles$\texttrademark$ at all, but want a box of Lucky Charms\texttrademark? Well, if you eliminated Fruity Pebbles$\texttrademark$ outright and grabbed a box of Lucky Charms\texttrademark, you would have $(n-1)$ choices for cereal for the rest of your $k$-set, so $\left(\!\left(n-1 \atop k - 1 \right)\!\right)$. As you continue to think about all of the different ways you could purchase your $k$-set, the pattern continues, giving you $\left(\!\left(n \atop k - 1 \right)\!\right) + \left(\!\left(n-1 \atop k - 1 \right)\!\right) + \left(\!\left(n-2 \atop k - 1 \right)\!\right) + \left(\!\left(n-3 \atop k - 1 \right)\!\right)+\cdots+\left(\!\left(n-(n-1) \atop k - 1 \right)\!\right) = \sum_{i=0}^{n-1} \left(\!\left(n-i \atop k-1 \right)\!\right)$ possibilities (this is the right hand side of the identity), but when all is said and done, you are still just choosing a $k$-set from an $n$-set, and therefore the two sides of the equality are counting the same thing, and thus the identity is proven.
+\end{proof}
+
+\end{document}

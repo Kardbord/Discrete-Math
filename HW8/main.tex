@@ -1,0 +1,104 @@
+\documentclass[12pt]{article}
+ \usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,amsfonts}
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+ 
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+ 
+\begin{document}
+ 
+%\renewcommand{\qedsymbol}{\filledbox}
+%Good resources for looking up how to do stuff:
+%Binary operators: http://www.access2science.com/latex/Binary.html
+%General help: http://en.wikibooks.org/wiki/LaTeX/Mathematics
+ 
+\title{Homework 8}
+\author{Tanner Kvarfordt - A02052217}
+\maketitle
+ 
+\begin{problem}{1}
+Use an exponential generating function to determine the number of $n$-digit quaternary sequences (sequences built from an alphabet of size 4) built from \{$0,1,2,3$\} with an even number of $0$s and an odd number of $1$s.
+\end{problem}
+ 
+\begin{proof}[Claim]
+The number of $n$-digit quaternary sequences built from the given set with the given constraints is $4^{n-1}$ with $n \geq 1$. Tested and found to be accurate at least until $n=3$. After that, possibilities get fairly large. The $n=1$ case produces a $1$ because it is required that each sequence have at least a single $1$ present, as there is a requirement to have an odd number of $1$s.
+\end{proof}
+
+\begin{proof}[Proof of claim]
+Using an exponential generating function $F(x)=\sum_{n\geq0}b_n\frac{x^n}{n!}$ such that $\big([\frac{x^n}{n!}]\{F(x)\}=b_n\big):=$ the number of $n$-digit quaternary sequences built from the given sets with the given constraints. Since there are four possible elements with which to build the quaternary sequence, $F(x)$ is equivalent to the product of each element's exponential generating function. Define $A(x)$ to be the exponential generating function (EGF) for the number of $0$s in the sequence, $B(x)$ as the EGF for the number of $1$s, $C(x)$ as the EGF for the number of $2$s, and $D(x)$ as the EGF for the number of $3$s. Because there are no constraints on $C(x)$ or $D(x)$, they are both the fundamental exponential generating function, \[C(x)=D(x)=e^x.\] Because $A(x)$ has the constraint of providing an even number of $0$s, \[A(x)=\frac{e^x+e^{-x}}{2},\] and because $B(x)$ has the constraint of providing an odd number of $1$s, \[B(x)=\frac{e^x-e^{-x}}{2}\]
+And so 
+\[F(x)=\sum_{n\geq0}b_n\frac{x^n}{n!}=A(x)B(x)C(x)D(x)=\frac{1}{4}(e^{4x}-1)=\frac{1}{4}(e^{4x}-e^0)\]
+\[F(x)=\frac{1}{4}\sum_{n \geq 0}4^n\frac{x^n}{n!}-\frac{1}{4}\sum_{n\geq0}0^n\frac{x^n}{n!}\]
+And therefore $[\frac{x^n}{n!}]\{F(x)\}=b_n=\frac{4^n}{4}-\frac{0^n}{4}=4^{n-1}$
+\end{proof}
+
+\begin{problem}{2}
+Use an exponential generating function to find $D_n$  from the Midterm Experience. Use the recurrence $D_n = nD_{n-1}+(-1)^n$.
+\end{problem}
+ 
+\begin{proof}[Claim]
+The closed formula for the given recurrence is $D_n \approx \frac{n!}{e}$. Okay, so it's not the most accurate, but due to other homework obligations and the difficulty of this problem, I don't have time to keep working on it. It is a very loose approximation... 
+\end{proof}
+
+\begin{proof}[Proof of claim]
+Begin by multiplying both sides of the recurrence by $\frac{x^n}{n!}$ and taking the sum of both sides from $n \geq 0$, and define the result to be $F(x)$. By doing so we have turned the recurrence into an exponential generating function, and so the closed formula for the recurrence is the coefficient on $\frac{x^n}{n!}$ in $F(x)$, or $[\frac{x^n}{n!}]\{F(x)\}$.
+\[F(x)=\sum_{n \geq 0}D_n\frac{x^n}{n!}=1+\sum_{n \geq 1}D_n\frac{x^n}{n!} =1+\sum_{n \geq 1}\frac{(nD_{n-1})x^n}{n!}+\sum_{n \geq 1}\frac{(-1)^nx^n}{n!}\]
+We know the generating function for $\sum_{n \geq 0}\frac{(-1)^nx^n}{n!}= e^{-x}$, so $\sum_{n \geq 1}\frac{(-1)^nx^n}{n!}= e^{-x}-1$, so
+\[F(x)=1+\sum_{n \geq 1}\frac{(nD_{n-1})x^n}{n!} +e^{-x}-1=e^{-x} + \sum_{n \geq 1}\frac{(nD_{n-1})x^n}{n!}\]
+From the last sum, we can simplify $\frac{n}{n!} = \frac{1}{(n-1)!}$, and factor an $x$ out of the numerator:
+\[F(x)=e^{-x} + x\sum_{n \geq 1}\frac{(D_{n-1})x^{n-1}}{(n-1)!}\]
+Now let's monkey with the indexing. Let $l = n +1$. From there we will notice that $F(x)$ appears on the RHS of the equation. At that point, we will do some algebraic manipulation.
+\[F(x)=e^{-x} + x\sum_{l \geq 0}\frac{(D_{l})x^{l}}{(l)!} = e^{-x}+xF(x)\]
+\[F(x)-xF(x)=e^{-x}\]
+\[F(x)(1-x)=e^{-x}\]
+\[F(x)=(e^{-x})\frac{1}{1-x}\]
+We know the generating functions for both terms on the right hand side of the equation:
+\[F(x)=\bigg(\sum_{n \geq 0}(-1)^n\frac{x^n}{n!} \bigg) \bigg(\sum_{n \geq 0}x^n\bigg)\]
+Here we will perform a convolution on the summation to get:
+\[F(x)=\sum_{n \geq 0}\bigg(\sum_{i = 0}^n \frac{(-1)^i}{i!}\bigg)x^n\]
+Now multiply the inner sum of the right side by $1$ in the form of $\frac{n!}{n!}$. Note that equality is preserved since we are multiplying by $1$.
+\[F(x)=\sum_{n \geq 0}\bigg(\sum_{i = 0}^n \frac{(-1)^i}{i!}\bigg)x^n \frac{n!}{n!}=\sum_{n \geq 0}\bigg(\sum_{i = 0}^n \frac{(-1)^i}{i!}\bigg)n! \frac{x^n}{n!}\]
+As $n$ approaches infinity, the inner summation rapidly approaches $e^{-1}$, providing an approximation for that value. Therefore
+\[F(x)\approx\sum_{n \geq 0} e^{-1}n!\frac{x^n}{n!}\]
+And therefore $[\frac{x^n}{n!}]\{F(x)\}\approx e^{-1}n!=\frac{n!}{e} \approx D_n$
+\end{proof}
+
+\begin{problem}{3}
+Solve the pizza problem AGAIN using an exponential generating function; that is, use an exponential generating function to solve the recurrence $P(n)=P(n-1)+n$ for $n \geq 1$, with $P(0)=1$.
+\end{problem}
+ 
+\begin{proof}[Claim]
+The closed formula for the given recurrence is $P(n)=\frac{1}{2}n^2+\frac{1}{2}n+1$, as verified by the many other methods we have used to produce this closed formula for this recurrence over the course of the last couple of months.
+\end{proof}
+
+\begin{proof}[Proof of claim]
+To begin, define for later use in the proof $F(x)$ such that $[\frac{x^n}{n!}]\{F(x)\}=P(n)$, which will eventually give us the closed formula for $P(n)$.
+\begin{eqnarray}
+F(x)=\sum_{n\geq0}P(n)\frac{x^n}{n!}
+\end{eqnarray}
+Note that
+\begin{eqnarray}
+F'(x)=\sum_{n \geq 0}P(n)\frac{nx^{n-1}}{n!}=\sum_{n \geq 1}P(n)\frac{nx^{n-1}}{n!}=\sum_{n \geq 1}P(n)\frac{x^{n-1}}{(n-1)!}
+\end{eqnarray}
+
+Next, modify the given recurrence slightly (preserving equality) to give a slightly different formula $P(n+1)=P(n)+n+1$. Next, multiply both sides of the new recurrence by $\frac{x^n}{n!}$ and take the sum of each side to infinity (preserving equality). For clarity, define this equation to be $G(x)$.
+\[G(x)=\sum_{n \geq 0}P(n+1)\frac{x^n}{n!}=\sum_{n \geq 0}P(n)\frac{x^n}{n!}+\sum_{n \geq 0}n\frac{x^n}{n!}+\sum_{n \geq 0}\frac{x^n}{n!}\]
+Notice that the LHS sum in $G(x)=\sum_{n \geq 0}P(n+1)\frac{x^n}{n!}=\sum_{n \geq 1}P(n)\frac{x^{n-1}}{(n-1)!}=F'(x)$, and notice that we know the equivalent statements to the two rightmost summations in the RHS of $G(x)$ so
+\[G(x)=F'(x)=F(x)+xe^x+e^x\]
+Solve the differential equation (I don't know how to do this or how to use maxima, so my classmates tell me that the following is true):
+\[F(x)=F(0)e^x+\frac{1}{2}x^2e^x+xe^x\]
+\[F(x)=\sum_{n\geq0}\frac{x^n}{n!}+\frac{1}{2}x^2\sum_{n \geq0}\frac{x^n}{n!}+\sum_{n\geq0}n\frac{x^n}{n!}\]
+\[F(x)=\sum_{n\geq0}\frac{x^n}{n!}+\frac{1}{2}\sum_{n \geq0}\frac{x^{n+2}}{n!}+\sum_{n\geq0}n\frac{x^n}{n!}\]
+We need to monkey with the index on the middle summation in order to get it into the form we want, so let $k=n+2$ so
+\[F(x)=\sum_{n\geq0}\frac{x^n}{n!}+\frac{1}{2}\sum_{k \geq2}\frac{x^{k}}{(k-2)!}\bigg(\frac{k(k-1)}{k(k-1)}\bigg)+\sum_{n\geq0}n\frac{x^n}{n!}\]
+\[F(x)=\sum_{n\geq0}\frac{x^n}{n!}+\frac{1}{2}\sum_{k \geq2}\frac{(k^2-k)x^{k}}{k!}+\sum_{n\geq0}n\frac{x^n}{n!}\]
+Now we can reindex the middle summation so that $k$ starts from $0$ since doing so only inserts the term $0+0$ the the beginning of the expanded sum, and since $k$ simply represents an index and is not unique, we can legally replace it with $n$ again while maintaining equality.
+\[F(x)=\sum_{n\geq0}\frac{x^n}{n!}+\frac{1}{2}\sum_{n \geq0}\frac{(n^2-n)x^{n}}{n!}+\sum_{n\geq0}n\frac{x^n}{n!}\]
+And therefore
+\[[\frac{x^n}{n!}]\{F(x)\}=P(n)=1+\frac{1}{2}(n^2-n)+n=\frac{1}{2}n^2-\frac{1}{2}n+n+1=\frac{1}{2}n^2+\frac{1}{2}n+1\]
+\end{proof}
+
+\end{document}
